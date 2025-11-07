@@ -545,7 +545,252 @@
                     statusLog: [{ status: 'open', date: now }]
                 };
             };
-
             // --- Rendering Logic ---
             const renderTickets = () => {
-                ticketBoard.innerHTML = '
+                ticketBoard.innerHTML = '';
+                
+                const filteredTickets = tickets.filter(t => t.status === currentView && t.status !== 'deleted');
+                
+                if (filteredTickets.length === 0) {
+                    emptyState.style.display = 'block';
+                    ticketBoard.appendChild(emptyState);
+                    return;
+                }
+                
+                emptyState.style.display = 'none';
+
+                filteredTickets.sort((a, b) => priorities[a.priority] - priorities[b.priority]);
+                
+                if (currentView === 'open') {
+                    const groupedByModule = filteredTickets.reduce((acc, ticket) => {
+                        (acc[ticket.module] = acc[ticket.module] || []).push(ticket);
+                        return acc;
+                    }, {});
+                    
+                    Object.keys(groupedByModule).sort().forEach(moduleName => {
+                        const groupDiv = document.createElement('div');
+                        groupDiv.className = 'module-group';
+                        groupDiv.innerHTML = `<h3>${moduleName}</h3>`;
+                        
+                        groupedByModule[moduleName].forEach(ticket => {
+                            groupDiv.appendChild(createTicketElement(ticket));
+                        });
+                        ticketBoard.appendChild(groupDiv);
+                    });
+                } else {
+                    filteredTickets.forEach(ticket => {
+                        ticketBoard.appendChild(createTicketElement(ticket));
+                    });
+                }
+                
+                feather.replace();
+            };
+            
+            const createTicketElement = (ticket) => {
+                const el = document.createElement('div');
+                el.className = 'ticket-card';
+                el.dataset.id = ticket.id;
+                el.dataset.status = ticket.status;
+                el.dataset.priority = ticket.priority;
+                
+                const createdDate = new Date(ticket.createdDate).toLocaleDateString();
+                
+                // Create links HTML
+                let linksHtml = '';
+                if (ticket.links && ticket.links.trim() !== '') {
+                    const urls = ticket.links.split('\n').filter(url => url.trim() !== '');
+                    if (urls.length > 0) {
+                        linksHtml = '<h5>Links:</h5><div class="ticket-links"><ul>' +
+                            urls.map(url => `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a></li>`).join('') +
+                            '</ul></div>';
+                    }
+                }
+                
+                // Create status log HTML
+                let logHtml = '';
+                if (ticket.statusLog && ticket.statusLog.length > 0) {
+                    logHtml = '<h5>Status History:</h5><div class="status-log"><ul>' +
+                        ticket.statusLog.slice().reverse().map(log => {
+                           const logDate = new Date(log.date).toLocaleString();
+                           return `<li><span class="status-name">${log.status}</span> <span class="status-date">on ${logDate}</span></li>`
+                        }).join('') +
+                        '</ul></div>';
+                }
+                
+                el.innerHTML = `
+                    <div class="ticket-header">
+                        <h4 class="ticket-title">${ticket.title}</h4>
+                    </div>
+                    <div class="ticket-meta">
+                        <span class="ticket-tag module">${ticket.module}</span>
+                        <span class="ticket-tag version">v${ticket.version.toFixed(1)}</span>
+                        <span>File(s): <strong>${ticket.file}</strong></span>
+                        <span>Created: ${createdDate}</span>
+                    </div>
+                    <div class="ticket-body" style="display: none;">
+                        <h5>Details:</h5>
+                        <pre>${ticket.details}</pre>
+                        ${linksHtml}
+                        ${logHtml}
+                    </div>
+                    <div class="ticket-actions">
+                        ${renderActionButtons(ticket.status)}
+                    </div>
+                `;
+                return el;
+            };
+            
+            const renderActionButtons = (status) => {
+                let buttons = '';
+                if (status !== 'in-progress') buttons += `<button title="In Progress" data-action="in-progress"><i class="icon" data-feather="play"></i></button>`;
+                if (status !== 'on-hold') buttons += `<button title="On Hold" data-action="on-hold"><i class="icon" data-feather="pause"></i></button>`;
+                if (status !== 'completed') buttons += `<button title="Completed" data-action="completed"><i class="icon" data-feather="check-circle"></i></button>`;
+                if (status !== 'open' && status !== 'deleted') buttons += `<button title="Re-open" data-action="open"><i class="icon" data-feather="rotate-ccw"></i></button>`;
+                if (status !== 'archived') buttons += `<button title="Archive" data-action="archived"><i class="icon" data-feather="archive"></i></button>`;
+                
+                buttons += `<button title="Edit" data-action="edit"><i class="icon" data-feather="edit"></i></button>`;
+                buttons += `<button title="Delete" data-action="deleted" class="delete"><i class="icon" data-feather="trash-2"></i></button>`;
+                return buttons;
+            };
+
+            // --- Modal & Form Logic ---
+            const showForm = (ticket = null) => {
+                if (ticket) {
+                    // Edit existing ticket
+                    formTitle.textContent = 'Edit Ticket';
+                    ticketIdInput.value = ticket.id;
+                    titleInput.value = ticket.title;
+                    priorityInput.value = ticket.priority;
+                    moduleInput.value = ticket.module;
+                    fileInput.value = ticket.file;
+                    detailsInput.value = ticket.details;
+                    linksInput.value = ticket.links || '';
+                } else {
+                    // Add new ticket
+                    formTitle.textContent = 'Add New Ticket';
+                    ticketForm.reset();
+                    ticketIdInput.value = '';
+                    priorityInput.value = 'medium';
+                }
+                modalBackdrop.style.display = 'flex';
+            };
+            
+            const hideForm = () => {
+                modalBackdrop.style.display = 'none';
+                ticketForm.reset();
+            };
+            
+            ticketForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const id = ticketIdInput.value;
+                const ticketData = {
+                    title: titleInput.value,
+                    priority: priorityInput.value,
+                    module: moduleInput.value.toLowerCase() || 'general',
+                    file: fileInput.value || 'N/A',
+                    details: detailsInput.value,
+                    links: linksInput.value,
+                };
+
+                if (id) {
+                    
+                     // Update existing ticket
+                    const index = tickets.findIndex(t => t.id == id);
+                    if (index !== -1) {
+                        tickets[index] = { ...tickets[index], ...ticketData };
+                    }
+                } else {
+                    // Create new ticket
+                    const now = new Date().toISOString();
+                    tickets.push({
+                        ...ticketData,
+                        id: Date.now(),
+                        status: 'open',
+                        createdDate: now,
+                        version: 0.1, // Initial version
+                        statusLog: [{ status: 'open', date: now }] // Initial log
+                    });
+                }
+                
+                saveTickets();
+                renderTickets();
+                hideForm();
+            });
+
+            // --- Event Handlers ---
+            createBtn.addEventListener('click', parseReport);
+            addTicketBtn.addEventListener('click', () => showForm());
+            cancelBtn.addEventListener('click', hideForm);
+            modalBackdrop.addEventListener('click', (e) => {
+                if (e.target === modalBackdrop) hideForm();
+            });
+
+            viewControls.addEventListener('click', (e) => {
+                if (e.target.classList.contains('view-btn')) {
+                    document.querySelector('.view-btn.active').classList.remove('active');
+                    e.target.classList.add('active');
+                    currentView = e.target.dataset.view;
+                    renderTickets();
+                }
+            });
+            
+            ticketBoard.addEventListener('click', (e) => {
+                const header = e.target.closest('.ticket-header');
+                const actionBtn = e.target.closest('button[data-action]');
+                
+                if (header) {
+                    const body = header.closest('.ticket-card').querySelector('.ticket-body');
+                    body.style.display = body.style.display === 'none' ? 'block' : 'none';
+                }
+                
+                if (actionBtn) {
+                    const card = actionBtn.closest('.ticket-card');
+                    const ticketId = parseFloat(card.dataset.id);
+                    const action = actionBtn.dataset.action;
+                    
+                    const ticket = tickets.find(t => t.id === ticketId);
+                    if (!ticket) return;
+
+                    if (action === 'deleted') {
+                        if (confirm('Are you sure you want to delete this ticket?')) {
+                            tickets = tickets.filter(t => t.id !== ticketId);
+                        } else {
+                            return;
+                        }
+                    } else if (action === 'edit') {
+                        showForm(ticket);
+                        return;
+                    } else {
+                        // This is a status change
+                        if (ticket.status !== action) {
+                            // Use precise math for float increment
+                            ticket.version = (ticket.version * 10 + 1) / 10;
+                            ticket.statusLog.push({ status: action, date: new Date().toISOString() });
+                            ticket.status = action;
+                        }
+                    }
+                    saveTickets();
+                    renderTickets();
+                }
+            });
+
+            // --- Utility ---
+            const saveTickets = () => {
+                tickets.sort((a, b) => {
+                    if (a.status === 'open' && b.status === 'open') {
+                        if (a.module !== b.module) return a.module.localeCompare(b.module);
+                        return priorities[a.priority] - priorities[b.priority];
+                    }
+                    return new Date(b.createdDate) - new Date(a.createdDate);
+                });
+                localStorage.setItem('fixTrackerTickets', JSON.stringify(tickets));
+            };
+
+            // --- Initial Load ---
+            renderTickets();
+        });
+    </script>
+
+</body>
+</html>
