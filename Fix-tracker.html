@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Tracker</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <style>
+        :root {
+            --color-critical: #e63946;
+            --color-high: #f9a03f;
+            --color-medium: #ffe6c7;
+            --color-low: #4ecdc4;
+            --color-text: #212529;
+            --color-text-light: #6c757d;
+            --color-bg: #f8f9fa;
+            --color-card: #ffffff;
+            --color-border: #dee2e6;
+            --color-primary: #1a535c;
+            --color-primary-light: #4ecdc4;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 8px;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: var(--color-primary);
+            line-height: 1.3;
+        }
+
+        h1 { text-align: center; margin-bottom: 25px; }
+        h2 { margin-top: 0; }
+        h3 { border-bottom: 2px solid var(--color-primary-light); padding-bottom: 5px; }
+        h4 { margin-top: 20px; margin-bottom: 8px; color: var(--color-text); }
+        h5 { color: var(--color-text-light); margin-top: 15px; margin-bottom: 5px; text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.5px;}
+
+        #app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        #input-section, #board-section {
+            background: var(--color-card);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        #report-paste-area {
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 12px;
+            box-sizing: border-box;
+            font-family: Consolas, "Courier New", monospace;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        #create-tickets-btn {
+            background-color: var(--color-primary);
+            color: white;
+            flex: 1;
+        }
+        #add-ticket-btn {
+            background-color: #555;
+            color: white;
+            flex-grow: 0;
+        }
+        #create-tickets-btn:hover { background-color: var(--color-primary-light); }
+        #add-ticket-btn:hover { background-color: #777; }
+
+        #view-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 2px solid var(--color-border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .view-btn {
+            padding: 10px 15px;
+            border: 1px solid var(--color-border);
+            background: #fff;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--color-text-light);
+            transition: all 0.2s;
+        }
+        .view-btn:hover {
+            background: #f1f1f1;
+            color: var(--color-text);
+        }
+        .view-btn.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .module-group > h3 {
+            margin-top: 0;
+            text-transform: capitalize;
+        }
+        
+        .ticket-card {
+            background: var(--color-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            border-left: 8px solid;
+            transition: all 0.2s;
+            border-color: #a8d0db; /* Default low */
+        }
+        
+        .ticket-card:hover {
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Priority Colors */
+        .ticket-card[data-priority="critical"] { border-left-color: var(--color-critical); }
+        .ticket-card[data-priority="high"] { border-left-color: var(--color-high); }
+        .ticket-card[data-priority="medium"] { border-left-color: var(--color-medium); }
+
+        /* Status Styles */
+        .ticket-card[data-status="completed"] { opacity: 0.65; }
+        .ticket-card[data-status="completed"] .ticket-header { text-decoration: line-through; }
+        .ticket-card[data-status="on-hold"] { opacity: 0.8; border-left-style: dashed; }
+        .ticket-card[data-status="archived"] { opacity: 0.5; }
+
+        .ticket-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+        }
+        
+        .ticket-title {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin: 0;
+            flex: 1;
+        }
+
+        .ticket-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 15px;
+            font-size: 0.9em;
+            color: var(--color-text-light);
+            padding: 0 20px 15px 20px;
+            align-items: center;
+        }
+        
+        .ticket-tag {
+            background: #eee;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.85em;
+        }
+        .ticket-tag.module { background: #e0f0f5; color: #0c5464; }
+        .ticket-tag.version { background: #e0e0e0; color: #333; }
+        
+        .ticket-body {
+            display: none; /* Hidden by default */
+            padding: 0 20px 15px 20px;
+            border-top: 1px solid var(--color-border);
+            margin: 0 20px;
+        }
+        
+        .ticket-body pre {
+            background-color: #fdfdfd;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 15px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: Consolas, "Courier New", monospace;
+        }
+        
+        .ticket-links ul, .status-log ul {
+            list-style: none;
+            background-color: #fdfdfd;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin: 0;
+        }
+        .ticket-links li { margin-bottom: 5px; }
+        .ticket-links a { word-break: break-all; }
+        
+        .status-log li {
+            padding: 5px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .status-log li:last-child { border-bottom: none; }
+        .status-log .status-name {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: capitalize;
+            background: #eee;
+        }
+        .status-log .status-date {
+            font-size: 0.9em;
+            color: var(--color-text-light);
+            margin-left: 10px;
+        }
+        
+        .ticket-actions {
+            display: flex;
+            gap: 5px;
+            padding: 10px 15px;
+            border-top: 1px solid var(--color-border);
+            background: #fafafa;
+            border-radius: 0 0 var(--radius) var(--radius);
+        }
+        
+        .ticket-actions button {
+            background: none;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            color: #555;
+            padding: 5px;
+        }
+        .ticket-actions button:hover {
+            background: #eee;
+            color: #000;
+        }
+        .ticket-actions button.delete:hover {
+            background: var(--color-critical);
+            color: white;
+        }
+        
+        .icon {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+        }
+        
+        /* Edit Form / Modal Styling */
+        #modal-backdrop {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+        
+        #ticket-form {
+            background: white;
+            padding: 25px;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        #ticket-form h2 {
+            margin-top: 0;
+            border-bottom: 2px solid var(--color-primary-light);
+            padding-bottom: 10px;
+        }
+        
+        #ticket-form label {
+            display: block;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        
+        #ticket-form input[type="text"],
+        #ticket-form select,
+        #ticket-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: var(--radius);
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        
+        #ticket-form textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: Consolas, "Courier New", monospace;
+        }
+        
+        #ticket-form .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        #ticket-form .form-row > div {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        #ticket-form .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        
+        #save-ticket-btn {
+            background: var(--color-primary);
+            color: white;
+            flex: 1;
+        }
+        #cancel-ticket-btn {
+            background: #777;
+            color: white;
+        }
+        
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            #input-section, #board-section { padding: 15px; }
+            .button-group { flex-direction: column; }
+            .ticket-header, .ticket-meta { padding-left: 15px; padding-right: 15px; }
+            .ticket-body { margin: 0 10px; padding: 0 10px 15px 10px; }
+            #modal-backdrop { padding: 10px; }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        
+        <h1>My Fix Tracker</h1>
+        
+        <div id="input-section">
+            <h2>Create New Tickets</h2>
+            <textarea id="report-paste-area" placeholder="Paste your full report here..."></textarea>
+            <div class="button-group">
+                <button id="create-tickets-btn" class="btn">Create Tickets from Report</button>
+                <button id="add-ticket-btn" class="btn">Add Manual Ticket</button>
+            </div>
+        </div>
+        
+        <div id="board-section">
+            <h2>Ticket Board</h2>
+            <div id="view-controls">
+                <button class="view-btn active" data-view="open">Open</button>
+                <button class="view-btn" data-view="in-progress">In Progress</button>
+                <button class="view-btn" data-view="on-hold">On Hold</button>
+                <button class="view-btn" data-view="completed">Completed</button>
+                <button class="view-btn" data-view="archived">Archived</button>
+            </div>
+            
+            <div id="ticket-board">
+                <p id="empty-state">No tickets to display for this view.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-backdrop">
+        <form id="ticket-form">
+            <h2 id="form-title">Add New Ticket</h2>
+            <input type="hidden" id="ticket-id-input">
+            
+            <div>
+                <label for="ticket-title-input">Title:</label>
+                <input type="text" id="ticket-title-input" required>
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="ticket-priority-input">Priority:</label>
+                    <select id="ticket-priority-input">
+                        <option value="critical">Critical</option>
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="ticket-module-input">Module:</label>
+                    <input type="text" id="ticket-module-input">
+                </div>
+                <div>
+                    <label for="ticket-file-input">File(s):</label>
+                    <input type="text" id="ticket-file-input">
+                </div>
+            </div>
+
+            <div>
+                <label for="ticket-details-input">Details:</label>
+                <textarea id="ticket-details-input"></textarea>
+            </div>
+            
+            <div>
+                <label for="ticket-links-input">Links (one URL per line):</label>
+                <textarea id="ticket-links-input"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" id="save-ticket-btn" class="btn">Save Ticket</button>
+                <button type="button" id="cancel-ticket-btn" class="btn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let tickets = JSON.parse(localStorage.getItem('fixTrackerTickets')) || [];
+            let currentView = 'open';
+
+            const pasteArea = document.getElementById('report-paste-area');
+            const createBtn = document.getElementById('create-tickets-btn');
+            const addTicketBtn = document.getElementById('add-ticket-btn');
+            const viewControls = document.getElementById('view-controls');
+            const ticketBoard = document.getElementById('ticket-board');
+            const emptyState = document.getElementById('empty-state');
+            
+            const modalBackdrop = document.getElementById('modal-backdrop');
+            const ticketForm = document.getElementById('ticket-form');
+            const formTitle = document.getElementById('form-title');
+            const ticketIdInput = document.getElementById('ticket-id-input');
+            const titleInput = document.getElementById('ticket-title-input');
+            const priorityInput = document.getElementById('ticket-priority-input');
+            const moduleInput = document.getElementById('ticket-module-input');
+            const fileInput = document.getElementById('ticket-file-input');
+            const detailsInput = document.getElementById('ticket-details-input');
+            const linksInput = document.getElementById('ticket-links-input');
+            const cancelBtn = document.getElementById('cancel-ticket-btn');
+            
+            const priorities = { critical: 1, high: 2, medium: 3, low: 4 };
+            
+            // --- Parsing Logic ---
+            const parseReport = () => {
+                const text = pasteArea.value;
+                if (!text.trim()) return;
+
+                const blocks = text.split( /((?:\n\s*\n|^)[A-Za-z0-9 '’&]+(?:🚨|:)\s*\n)/ );
+                let newTickets = [];
+
+                if (blocks.length <= 1) {
+                    const issueSectionMatch = text.match(/(Critical Issues and Recommendations|Critical Issues|Recommendations)[\s\S]*/i);
+                    const textToParse = issueSectionMatch ? issueSectionMatch[1] : text;
+                    const issueBlocks = textToParse.split(/\n\s*\*\s+/);
+                    
+                    if (issueBlocks.length > 1) {
+                        issueBlocks.slice(1).forEach(block => newTickets.push(createTicketFromBlock(block)));
+                    } else {
+                        newTickets.push(createTicketFromBlock(text));
+                    }
+                } else {
+                    for (let i = 1; i < blocks.length; i += 2) {
+                        const title = blocks[i].trim();
+                        const details = (blocks[i+1] || "").trim();
+                        newTickets.push(createTicketFromBlock(title + "\n" + details));
+                    }
+                }
+                
+                if(newTickets.length > 0) {
+                    tickets = tickets.concat(newTickets);
+                    saveTickets();
+                    renderTickets();
+                    pasteArea.value = '';
+                }
+            };
+            
+            const createTicketFromBlock = (block) => {
+                const lines = block.split('\n');
+                const firstLine = lines[0] || 'Untitled Ticket';
+                
+                const title = firstLine.replace(/🚨/, '').replace(/:$/, '').trim();
+                
+                let priority = 'medium';
+                if (/CRITICAL/i.test(title)) priority = 'critical';
+                else if (/WARNING|HIGH|BUG/i.test(title)) priority = 'high';
+                else if (/LOW|REDUNDANT/i.test(title)) priority = 'low';
+
+                const fileMatch = block.match(/File:\s*([^\s\n]+)/i);
+                let file = fileMatch ? fileMatch[1] : 'N/A';
+                
+                const fileMatches = block.match(/File[s]?:\s*([^\n]+)/i);
+                if (fileMatches) file = fileMatches[1];
+
+                let module = 'General';
+                if (file !== 'N/A') {
+                    const firstFile = file.split(',')[0].trim();
+                    const parts = firstFile.split('/').filter(p => p !== 'src');
+                    module = parts.length > 1 ? parts[0] : parts[0].split('.')[0];
+                }
+
+                const detailsMatch = block.match(/(Issue|Risk|Impact|Recommendation|Detail|Problem|Solution)s?:\s*([\s\S]*)/i);
+                const details = detailsMatch ? block : `Details:\n${block}`;
+                
+                const now = new Date().toISOString();
+                return {
+                    id: Date.now() + Math.random(),
+                    title: title,
+                    priority: priority,
+                    module: module.toLowerCase().replace('.ts', ''),
+                    file: file,
+                    details: details.trim(),
+                    links: '',
+                    status: 'open',
+                    createdDate: now,
+                    version: 0.1,
+                    statusLog: [{ status: 'open', date: now }]
+                };
+            };
+
+            // --- Rendering Logic ---
+            const renderTickets = () => {
+                ticketBoard.innerHTML = '
