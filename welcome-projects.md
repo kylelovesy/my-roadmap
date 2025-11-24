@@ -9,16 +9,19 @@ The Eye-Doo app follows a complex authentication and onboarding flow with multip
 ## Main User Paths
 
 ### Path 1: New User Registration Flow
+
 ```
 Welcome → Register → Email Verification → Pricing → Onboarding → Setup → Projects
 ```
 
 ### Path 2: Existing User Sign-In Flow
+
 ```
 Welcome → Sign In → [Various Routes Based on State] → Projects
 ```
 
 ### Path 3: Trial User Flow
+
 ```
 Welcome → Register/Sign In → Trial Onboarding → Setup → Projects
 ```
@@ -272,14 +275,14 @@ graph LR
     A[WelcomeScreen] --> B[useRouter.push]
     B --> C[RegisterScreen]
     C --> D[useRegister]
-    D --> E[AuthService.register]
-    E --> F[AuthRepository.create]
-    F --> G[Firebase.createUser]
+    D --> E[AuthService_register]
+    E --> F[AuthRepository_create]
+    F --> G[Firebase_createUser]
 
     H[SignInScreen] --> I[useSignIn]
-    I --> J[AuthService.signIn]
-    J --> K[AuthRepository.signIn]
-    K --> L[Firebase.signInWithEmailAndPassword]
+    I --> J[AuthService_signIn]
+    J --> K[AuthRepository_signIn]
+    K --> L[Firebase_signInWithEmailAndPassword]
 ```
 
 ### State Management Flow
@@ -394,11 +397,11 @@ graph TD
     C --> D[Repository Method]
     D --> E[Firestore Operation]
 
-    E -->|Success| F[Return Result.ok(data)]
-    E -->|Error| G[ErrorMapper.fromFirestore]
+    E -->|Success| F[Return Result.ok_data]
+    E -->|Error| G[ErrorMapper_fromFirestore]
 
     G --> H[AppError with context]
-    H --> I[Result.err(error)]
+    H --> I[Result.err_error]
     I --> J[Error boundary/Global handler]
 
     J --> K{Error Type}
