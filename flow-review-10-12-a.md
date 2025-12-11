@@ -86,10 +86,11 @@ flowchart TD
   A[RootLayout mount] --> B[AuthInitializer sets authState]
   B --> C[onAuthStateChanged -> waitForUserDocumentsReady -> userService.getUser]
   C --> D[Auth store authState success]
-  D --> E[(auth)/_layout guest guard]
-  D --> F[(protected)/_layout auth guard]
-  A --> G[subscriptionService.loadAllPlans (non-blocking)]
+  D --> E[auth/_layout guest guard]
+  D --> F[protected/_layout auth guard]
+  A --> G[subscriptionService.loadAllPlans non-blocking]
   G --> H[useSubscriptionPlans read cache]
   H --> I[Pricing/FeatureAccess render]
 ```
+
 
