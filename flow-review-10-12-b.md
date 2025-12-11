@@ -80,7 +80,8 @@ flowchart TD
   B --> C[authService.signIn]
   C --> D[FirestoreAuthRepository.signIn -> Firebase Auth]
   D --> E[AuthInitializer onAuthStateChanged]
-  E --> F[userService.getUser + setAuthState(success)]
+  E --> F[userService.getUser + setAuthStatesuccess]
   F --> G[(auth)/_layout guest guard redirects]
 ```
+
 
