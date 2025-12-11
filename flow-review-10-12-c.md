@@ -70,8 +70,9 @@ flowchart TD
   B --> C[authService.register]
   C --> D[FirestoreAuthRepository.register -> Firebase Auth + waitForUserDocumentsReady]
   D --> E[userService.getUser]
-  E --> F[authState success + setIsRegistering(false)]
+  E --> F[authState success + setIsRegisteringfalse]
   F --> G[AuthInitializer subscription keeps user in sync]
   G --> H[Redirect to Pricing]
 ```
+
 
