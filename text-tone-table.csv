@@ -1,0 +1,597 @@
+page,location,text,char_count,typography_variant,text_source
++not-found,Main message,Page Not Found,14,premiumHero,inline string
++not-found,Main message,The page you are looking for does not exist.,44,bodyLarge,inline string
++not-found,Primary action button,Return To App,13,StandardAppButton/primary,inline string
+(auth)/welcome,Hero tagline,NEVER MISS A MOMENT,19,premiumEmphasis,inline string
+(auth)/welcome,App name,Eye Doo,7,premiumHero,inline string
+(auth)/welcome,Hero subtitle,Plan perfect events with intelligent tracking and seamless coordination,71,titleSmall,inline string
+(auth)/welcome,Primary CTA,Get Started,11,StandardAppButton/primary,inline string
+(auth)/welcome,Secondary CTA,Sign In,7,StandardAppButton/secondary,inline string
+(auth)/welcome,Footer link,Design System Preview,21,labelMedium,inline string
+(auth)/sign-in,Header,WELCOME BACK,12,mono,inline string
+(auth)/sign-in,Header,Sign In,7,displayMedium,inline string
+(auth)/sign-in,Divider label,OR,2,labelSmall,inline string
+(auth)/sign-in,Footer button,Don't have an account? Sign up,30,StandardAppButton/tertiary,inline string
+(auth)/sign-in,Footer button,Forgot Password?,16,StandardAppButton/tertiary,inline string
+(auth)/sign-in,Social login dialog action,Cancel,6,StandardAppDialog action,inline string
+(auth)/sign-in,Social login dialog action,Sign in with {provider},23,StandardAppDialog action,inline template
+(auth)/register,Header,GET STARTED,11,titleSmall,inline string
+(auth)/register,Header,Create Account,14,premiumHero,inline string
+(auth)/register,Header subtitle,Join Eye-Doo to plan your perfect event,39,titleSmall,inline string
+(auth)/register,Footer button,Already have an account? Sign in,32,StandardAppButton/tertiary,inline string
+(auth)/reset-password,Header,RECOVER ACCESS,14,titleSmall,inline string
+(auth)/reset-password,Header,Forgot Password?,16,displayMedium,inline string
+(auth)/reset-password,Header subtitle,Enter your email to receive reset instructions,46,bodyLarge,inline string
+(auth)/reset-password,Footer button,Back to Sign In,15,StandardAppButton/tertiary,inline string
+(auth)/reset-password-confirm,Invalid link title,⚠️ Invalid Link,15,displaySmall,inline string
+(auth)/reset-password-confirm,Invalid link body,This reset link has expired or is invalid. Please request a new one.,68,bodyMedium,inline string
+(auth)/reset-password-confirm,Invalid link action,Request New Link,16,StandardAppButton/primary,inline string
+(auth)/reset-password-confirm,Header,New Password,12,displayMedium,inline string
+(auth)/reset-password-confirm,Header subtitle,Create a new password for {email},33,bodyLarge,inline template
+(auth)/reset-password-confirm,Header subtitle,Secure your account with a new password,39,bodyLarge,inline string
+(auth)/terms-of-service,Hero emoji,📄,1,StandardAppText/default,inline string
+(auth)/terms-of-service,Hero title,Terms of Service,16,headlineLarge,inline string
+(auth)/terms-of-service,Card title,Terms of Service for Eye-Doo,28,headlineSmall,inline string
+(auth)/terms-of-service,Card body,"Welcome to Eye-Doo. By accessing or using our mobile application, you agree to be bound
+by these Terms of Service.
+
+1. Acceptance of Terms
+By creating an account, you agree to comply with all applicable laws and regulations.
+
+2. User Accounts
+You are responsible for maintaining the confidentiality of your account credentials and
+for all activities that occur under your account.
+
+3. Privacy
+Your privacy is important to us. Please review our Privacy Policy to understand how we
+collect and use your information.
+
+4. User Conduct
+You agree not to use the service for any unlawful purpose or in any way that could
+damage, disable, or impair the service.
+
+5. Intellectual Property
+All content, features, and functionality of the service are owned by Eye-Doo and are
+protected by international copyright, trademark, and other intellectual property laws.
+
+6. Limitation of Liability
+Eye-Doo shall not be liable for any indirect, incidental, special, consequential, or
+punitive damages resulting from your use of the service.
+
+7. Changes to Terms
+We reserve the right to modify these terms at any time. We will notify users of any
+material changes by posting the updated terms on this page.",1186,bodyMedium,inline string
+(auth)/terms-of-service,Primary action,Agree & Continue,16,StandardAppButton/primary,inline string
+(auth)/terms-of-service,Secondary action,View Privacy Policy,19,StandardAppButton/tertiary,inline string
+(auth)/terms-of-service,Tertiary action,Cancel,6,StandardAppButton/tertiary,inline string
+(auth)/privacy-policy,Hero emoji,🔒,1,StandardAppText/default,inline string
+(auth)/privacy-policy,Hero title,Privacy Policy,14,headlineLarge,inline string
+(auth)/privacy-policy,Card title,Your Privacy Matters,20,headlineSmall,inline string
+(auth)/privacy-policy,Card body,"This Privacy Policy describes how Eye-Doo collects, uses, and discloses your Personal
+Information.
+
+1. Information We Collect
+We collect information you provide directly to us, such as when you create an account,
+update your profile, or use our services.
+
+2. How We Use Information
+We use the information we collect to provide, maintain, and improve our services.
+
+3. Information Sharing
+We do not sell, trade, or rent your personal information to third parties. We may share
+your information only as described in this policy.
+
+4. Data Security
+We implement appropriate technical and organizational measures to protect your personal
+information against unauthorized access, alteration, disclosure, or destruction.
+
+5. Your Rights
+You have the right to access, update, or delete your personal information at any time
+through your account settings.
+
+6. Changes to This Policy
+We may update this Privacy Policy from time to time. We will notify you of any changes
+by posting the new Privacy Policy on this page.",1008,bodyMedium,inline string
+(auth)/privacy-policy,Secondary action,View Terms of Service,21,StandardAppButton/tertiary,inline string
+(auth)/privacy-policy,Primary action,Back,4,StandardAppButton/primary,inline string
+(auth)/design-system-preview,Header,Design System Preview,21,premiumHero,inline string
+(auth)/design-system-preview,Header subtitle,"Temporary screen to review typography, components, variants, and options.",73,premiumEmphasis,inline string
+(auth)/design-system-preview,Section header,Typography,10,titleMedium,inline string
+(auth)/design-system-preview,Typography sample label,Display Large,13,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Display Medium,14,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Display Small,13,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Headline Large,14,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Headline Medium,15,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Headline Small,14,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Title Large,11,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Title Medium,12,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Title Small,11,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Body Large,10,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Body Medium,11,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Body Small,10,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Label Large,11,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Label Medium,12,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Label Small,11,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Technical,9,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Premium Hero,12,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Premium Emphasis,16,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Typography sample label,Premium Readout,15,StandardAppText/{variant},inline array
+(auth)/design-system-preview,Section header,Color Tokens,12,titleMedium,inline string
+(auth)/design-system-preview,Section helper,"Brand, technical, and feedback accents across core tokens.",58,bodySmall,inline string
+(auth)/design-system-preview,Swatch label,Primary,7,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Primary Soft,12,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Primary Muted,13,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Tech Teal,9,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Teal Soft,9,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Teal Muted,10,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Amber,5,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Amber Soft,10,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Amber Muted,11,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Success,7,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Error,5,labelSmall,inline string
+(auth)/design-system-preview,Swatch label,Info,4,labelSmall,inline string
+(auth)/design-system-preview,Section header,Buttons,7,titleMedium,inline string
+(auth)/design-system-preview,Button sample,Primary Action,14,StandardAppButton,inline string
+(auth)/design-system-preview,Button sample,Primary Action Full Width,25,StandardAppButton,inline string
+(auth)/design-system-preview,Button sample,Secondary Action,16,StandardAppButton,inline string
+(auth)/design-system-preview,Button sample,Tertiary Action,15,StandardAppButton,inline string
+(auth)/design-system-preview,Button sample,Disabled Button,15,StandardAppButton,inline string
+(auth)/design-system-preview,Section header,Inputs & Selection,18,titleMedium,inline string
+(auth)/design-system-preview,Input label,Text Input,10,StandardAppTextInput label,inline string
+(auth)/design-system-preview,Input placeholder,Preview input styles,20,StandardAppTextInput placeholder,inline string
+(auth)/design-system-preview,Input label,Success Input,13,StandardAppTextInput label,inline string
+(auth)/design-system-preview,Input placeholder,Success state,13,StandardAppTextInput placeholder,inline string
+(auth)/design-system-preview,Input value,Looks good,10,StandardAppTextInput value,inline string
+(auth)/design-system-preview,Input success text,Success helper text,19,StandardAppTextInput successText,inline string
+(auth)/design-system-preview,Input label,Error Input,11,StandardAppTextInput label,inline string
+(auth)/design-system-preview,Input placeholder,Error state,11,StandardAppTextInput placeholder,inline string
+(auth)/design-system-preview,Input value,Needs attention,15,StandardAppTextInput value,inline string
+(auth)/design-system-preview,Input error text,Error helper text,17,StandardAppTextInput errorText,inline string
+(auth)/design-system-preview,Checkbox label,Checkbox option,15,StandardAppCheckbox label,inline string
+(auth)/design-system-preview,Switch label,Switch option,13,StandardAppSwitch label,inline string
+(auth)/design-system-preview,Segmented button label,Primary,7,StandardAppSegmentedButtons label,inline array
+(auth)/design-system-preview,Segmented button label,Secondary,9,StandardAppSegmentedButtons label,inline array
+(auth)/design-system-preview,Segmented button label,Tertiary,8,StandardAppSegmentedButtons label,inline array
+(auth)/design-system-preview,Chip label,Outlined,8,StandardAppChip,inline string
+(auth)/design-system-preview,Chip label,Flat,4,StandardAppChip,inline string
+(auth)/design-system-preview,Chip label,Selected,8,StandardAppChip,inline string
+(auth)/design-system-preview,Section header,Project Modals,14,titleMedium,inline string
+(auth)/design-system-preview,Section helper,Launch project-related modals with placeholder data to preview form layouts.,76,bodySmall,inline string
+(auth)/design-system-preview,Subsection label,Project Details,15,labelLarge,inline string
+(auth)/design-system-preview,Button label,Project Form,12,StandardAppButton,inline string
+(auth)/design-system-preview,Subsection label,Project Lists,13,labelLarge,inline string
+(auth)/design-system-preview,Button label,Task Item,9,StandardAppButton,inline string
+(auth)/design-system-preview,Button label,Kit Item,8,StandardAppButton,inline string
+(auth)/design-system-preview,Button label,Couple Shot,11,StandardAppButton,inline string
+(auth)/design-system-preview,Button label,Group Shot,10,StandardAppButton,inline string
+(auth)/design-system-preview,Button label,Tag,3,StandardAppButton,inline string
+(auth)/design-system-preview,Button label,Note,4,StandardAppButton,inline string
+(auth)/design-system-preview,Button label,Vendor,6,StandardAppButton,inline string
+(auth)/design-system-preview,Section header,Enhanced Modal,14,titleMedium,inline string
+(auth)/design-system-preview,Section helper,Base modal surface used by the form modals above and the cover image picker below.,82,bodySmall,inline string
+(auth)/design-system-preview,Button label,Open Enhanced Modal,19,StandardAppButton,inline string
+(auth)/design-system-preview,Subsection label,Project Cover Picker,20,labelLarge,inline string
+(auth)/design-system-preview,Section header,Feedback & Badges,17,titleMedium,inline string
+(auth)/design-system-preview,Alert title,Success,7,StandardAppAlert title,inline string
+(auth)/design-system-preview,Alert message,This is a success alert.,24,StandardAppAlert message,inline string
+(auth)/design-system-preview,Alert title,Warning,7,StandardAppAlert title,inline string
+(auth)/design-system-preview,Alert message,This is a warning alert.,24,StandardAppAlert message,inline string
+(auth)/design-system-preview,Alert title,Error,5,StandardAppAlert title,inline string
+(auth)/design-system-preview,Alert message,This is an error alert.,23,StandardAppAlert message,inline string
+(auth)/design-system-preview,Alert title,Info,4,StandardAppAlert title,inline string
+(auth)/design-system-preview,Alert message,This is an info alert.,22,StandardAppAlert message,inline string
+(auth)/design-system-preview,Status badge label,Neutral,7,StandardAppStatusBadge label,inline string
+(auth)/design-system-preview,Status badge label,Success,7,StandardAppStatusBadge label,inline string
+(auth)/design-system-preview,Status badge label,Warning,7,StandardAppStatusBadge label,inline string
+(auth)/design-system-preview,Status badge label,Error,5,StandardAppStatusBadge label,inline string
+(auth)/design-system-preview,Section header,Surfaces & Elevation,20,titleMedium,inline string
+(auth)/design-system-preview,Surface label,Low,3,labelMedium,inline string
+(auth)/design-system-preview,Surface label,Medium,6,labelMedium,inline string
+(auth)/design-system-preview,Surface label,High,4,labelMedium,inline string
+(auth)/design-system-preview,Surface label,Glass,5,labelMedium,inline string
+(auth)/design-system-preview,Section helper,Use this screen to validate component variants and spacing as styles evolve.,76,bodySmall,inline string
+(auth)/design-system-preview,Section header,Premium Accents,15,titleMedium,inline string
+(auth)/design-system-preview,Surface label,Primary Glow,12,labelMedium,inline string
+(auth)/design-system-preview,Surface helper,Elevated surface with brand glow and glass overlay.,51,bodySmall,inline string
+(auth)/design-system-preview,Enhanced modal title,Enhanced Modal,14,EnhancedModal title,inline string
+(auth)/design-system-preview,Enhanced modal action,Confirm,7,StandardAppButton,inline string
+(auth)/design-system-preview,Enhanced modal action,Cancel,6,StandardAppButton,inline string
+(auth)/design-system-preview,Enhanced modal helper,"Use EnhancedModal for flexible layouts, glass surfaces, and consistent actions.",79,bodySmall,inline string
+(auth)/design-system-preview,Enhanced modal input label,Sample Field,12,StandardAppTextInput label,inline string
+(auth)/design-system-preview,Enhanced modal input value,Preview only,12,StandardAppTextInput value,inline string
+(auth)/design-system-preview,Enhanced modal input success,Looks good,10,StandardAppTextInput successText,inline string
+(protected)/(features)/camera,Alert title,Scanned Data,12,Alert title,inline string
+(protected)/(features)/camera,Alert action,Scan Again,10,Alert button,inline string
+(protected)/(features)/camera,Alert action,Cancel,6,Alert button,inline string
+(protected)/(features)/camera,Permission loading,Loading camera...,17,bodyLarge,inline string
+(protected)/(features)/camera,Permission header,Camera Access Required,22,headlineSmall,inline string
+(protected)/(features)/camera,Permission body,We need camera access to scan QR codes.,39,bodyMedium,inline string
+(protected)/(features)/camera,Permission body,We need camera access to capture photos for your project.,57,bodyMedium,inline string
+(protected)/(features)/camera,Permission action,Grant Camera Access,19,StandardAppButton,inline string
+(protected)/(features)/camera,Permission action,Go Back,7,StandardAppButton,inline string
+(protected)/(features)/camera,No project header,No Project Selected,19,headlineSmall,inline string
+(protected)/(features)/camera,No project body,Please select a project before taking photos.,45,bodyMedium,inline string
+(protected)/(features)/camera,No project action,Go Back,7,StandardAppButton,inline string
+(protected)/(features)/camera,Photo mode badge,{remainingPhotos} photos left,29,labelMedium,inline template
+(protected)/(features)/camera,QR mode badge,QR Scanner,10,labelMedium,inline string
+(protected)/(features)/camera,QR overlay instruction,Align QR code within the frame,30,StandardAppText/default,inline string
+(protected)/(features)/camera,Project name fallback,Untitled Project,16,labelSmall,inline string
+(protected)/(features)/camera,Photo limit notice,Photo limit reached,19,labelSmall,inline string
+(protected)/(features)/tag-photo,Error state,Error: Missing photo or project information.,44,bodyLarge,inline string
+(protected)/(features)/tag-photo,Error action,Go Back,7,StandardAppButton/primary,inline string
+(protected)/(features)/tag-photo,Header,Edit Tags,9,headlineMedium,inline string
+(protected)/(features)/tag-photo,Header,Tag Your Photo,14,headlineMedium,inline string
+(protected)/(features)/tag-photo,Input label,Add a tag,9,StandardAppTextInput label,inline string
+(protected)/(features)/tag-photo,Empty selection,No tags selected yet,20,bodySmall,inline string
+(protected)/(features)/tag-photo,Suggestions label,Suggestions,11,labelMedium,inline string
+(protected)/(features)/tag-photo,Suggestions label,Available Tags,14,labelMedium,inline string
+(protected)/(features)/tag-photo,Suggestions empty,No matching tags,16,bodyMedium,inline string
+(protected)/(features)/tag-photo,Suggestions empty,No tags available,17,bodyMedium,inline string
+(protected)/(features)/tag-photo,Action button,Cancel,6,StandardAppButton/secondary,inline string
+(protected)/(features)/tag-photo,Action button,Update Tags,11,StandardAppButton/tertiary,inline string
+(protected)/(features)/tag-photo,Action button,Save Photo & Tags,17,StandardAppButton/tertiary,inline string
+(protected)/(features)/share-photo,Error state,Photo not found.,16,bodyLarge,inline string
+(protected)/(features)/share-photo,Error action,Go Back,7,StandardAppButton/secondary,inline string
+(protected)/(features)/share-photo,Unavailable header,Sharing Not Available,21,headlineSmall,inline string
+(protected)/(features)/share-photo,Unavailable body,Photo sharing is not available on your current plan. Upgrade to share photos.,77,bodyMedium,inline string
+(protected)/(features)/share-photo,Unavailable action,Go Back,7,StandardAppButton/secondary,inline string
+(protected)/(features)/share-photo,Modal title,Share Photo,11,EnhancedModal title,inline string
+(protected)/(features)/share-photo,Modal subtitle,Share your moment with a custom message.,40,EnhancedModal subtitle,inline string
+(protected)/(features)/share-photo,Modal action,Cancel,6,StandardAppButton/secondary,inline string
+(protected)/(features)/share-photo,Modal action,Share Now,9,StandardAppButton/primary,inline string
+(protected)/(features)/share-photo,Input label,Add a Message,13,StandardAppTextInput label,inline string
+(protected)/(features)/share-photo,Hashtag toggle title,Include Hashtags,16,List.Item title,inline string
+(protected)/(features)/share-photo,Hashtag toggle empty,No tags to show,15,List.Item description fallback,inline string
+(protected)/(payment)/index,Header,Complete Your Subscription,26,headlineMedium,inline string
+(protected)/(payment)/index,Status,Confirming payment... Please wait.,34,StandardAppText/default,inline string
+(protected)/(payment)/index,Plan header,{plan} Plan - {cycle},21,headlineMedium,inline template
+(protected)/(payment)/index,Line item label,Base Price:,11,StandardAppText/default,inline string
+(protected)/(payment)/index,Line item label,Promo Code ({promo}):,21,StandardAppText/default,inline template
+(protected)/(payment)/index,Line item label,Discount:,9,StandardAppText/default,inline string
+(protected)/(payment)/index,Total label,Total:,6,StandardAppText/default,inline string
+(protected)/(payment)/index,Form helper,Enter your card details to complete the payment,47,bodyMedium,inline string
+(protected)/(payment)/index,Primary button,Processing...,13,StandardAppButton/primary,inline string
+(protected)/(payment)/index,Primary button,Update Payment Method,21,StandardAppButton/primary,inline string
+(protected)/(payment)/index,Primary button,Pay {formattedPrice},20,StandardAppButton/primary,inline template
+(protected)/(payment)/index,Secure notice,🔒 Secure payment powered by Stripe,34,bodySmall,inline string
+(protected)/(payment)/index,Problem dialog title,Problem processing payment,26,PaymentStatusDialog title,inline string
+(protected)/(payment)/index,Problem dialog message,Please try again.,17,PaymentStatusDialog message,inline string
+(protected)/(payment)/index,Problem dialog action,Retry,5,PaymentStatusDialog action,inline string
+(protected)/(payment)/pricing,Primary CTA,Try EyeDoo Now,14,StandardAppButton/primary,inline string
+(protected)/(payment)/pricing,Primary CTA,Continue To Payment,19,StandardAppButton/primary,inline string
+(protected)/(payment)/pricing,Email verification skip,Proceed without verifying email,31,EmailVerificationModal skipButtonLabel,inline string
+(protected)/(setup)/index,Top bar,Setup Overview,14,StandardAppTopBar title,inline string
+(protected)/(setup)/index,Header,Master List Status,18,headlineMedium,inline string
+(protected)/(setup)/index,Action,Skip & Use Defaults,19,StandardAppButton/tertiary,inline string
+(protected)/(setup)/index,Action,Reset All Lists,15,StandardAppButton/secondary,inline string
+(protected)/(setup)/index,Description,Review and customize your lists.,32,bodyMedium,inline string
+(protected)/(setup)/index,Setup card title,Kit List,8,SetupCard title,inline string
+(protected)/(setup)/index,Setup card description,Equipment and gear checklist,28,SetupCard description,inline string
+(protected)/(setup)/index,Setup card title,Task List,9,SetupCard title,inline string
+(protected)/(setup)/index,Setup card description,Pre-shoot preparation tasks,27,SetupCard description,inline string
+(protected)/(setup)/index,Setup card title,Couple Shots,12,SetupCard title,inline string
+(protected)/(setup)/index,Setup card description,Romantic photo ideas,20,SetupCard description,inline string
+(protected)/(setup)/index,Setup card title,Group Shots,11,SetupCard title,inline string
+(protected)/(setup)/index,Setup card description,Family and group photos,23,SetupCard description,inline string
+(protected)/(setup)/index,Skip dialog title,Fast Track Setup,16,StandardAppDialog title,inline string
+(protected)/(setup)/index,Skip dialog content,Apply standard default lists for Kit and Group Shots?,53,StandardAppDialog content,inline string
+(protected)/(setup)/index,Skip dialog content,Apply standard default lists for all categories?,48,StandardAppDialog content,inline string
+(protected)/(setup)/index,Skip dialog action,Cancel,6,StandardAppDialog action,inline string
+(protected)/(setup)/index,Skip dialog action,Confirm,7,StandardAppDialog action,inline string
+(protected)/(setup)/index,Reset dialog title,Reset All Lists,15,StandardAppDialog title,inline string
+(protected)/(setup)/index,Reset dialog content,This will revert all your lists to the latest template versions.,64,StandardAppDialog content,inline string
+(protected)/(setup)/index,Reset dialog action,Cancel,6,StandardAppDialog action,inline string
+(protected)/(setup)/index,Reset dialog action,Reset,5,StandardAppDialog action,inline string
+(protected)/(setup)/index,Error dialog title,Error,5,StandardAppDialog title,inline string
+(protected)/(setup)/index,Error dialog action,OK,2,StandardAppDialog action,inline string
+(protected)/(setup)/index,Success dialog title,Success,7,StandardAppDialog title,inline string
+(protected)/(setup)/index,Success dialog action,OK,2,StandardAppDialog action,inline string
+(protected)/(setup)/index,SetupCard label,Status:,7,bodySmall,component: SetupCard
+(protected)/(setup)/index,SetupCard status,Locked,6,StatusBadge label,component: SetupCard
+(protected)/(setup)/index,SetupCard status,Created,7,StatusBadge label,component: SetupCard
+(protected)/(setup)/index,SetupCard status,Not Created,11,StatusBadge label,component: SetupCard
+(protected)/(setup)/index,SetupCard label,Available:,10,bodySmall,component: SetupCard
+(protected)/(setup)/index,SetupCard availability,Yes,3,StatusBadge label,component: SetupCard
+(protected)/(setup)/index,SetupCard availability,Upgrade Required,16,StatusBadge label,component: SetupCard
+(protected)/(setup)/index,SetupCard hint,Tap to create and customize,27,bodySmall,component: SetupCard
+(protected)/(setup)/kit,Top bar,Kit List Setup,14,StandardAppTopBar title,inline string
+(protected)/(setup)/kit,Unavailable feature title,Premium Feature,15,InfoCard title,inline string
+(protected)/(setup)/kit,Unavailable feature description,Upgrade your plan to access and customize the Kit List.,55,InfoCard description,inline string
+(protected)/(setup)/kit,Unavailable feature button,Back to Setup,13,InfoCard button,inline string
+(protected)/(setup)/kit,Locked title,Kit Setup Complete,18,InfoCard title,inline string
+(protected)/(setup)/kit,Locked description,Your kit list is saved.,23,InfoCard description,inline string
+(protected)/(setup)/kit,Locked button,Back,4,InfoCard button,inline string
+(protected)/(setup)/kit,Primary action,Save & Continue,15,StandardAppButton/primary,inline string
+(protected)/(setup)/kit,Loading state,Loading defaults...,19,StandardAppText/default,inline string
+(protected)/(setup)/tasks,Top bar,Tasks Setup,11,StandardAppTopBar title,inline string
+(protected)/(setup)/tasks,Unavailable feature title,Premium Feature,15,InfoCard title,inline string
+(protected)/(setup)/tasks,Unavailable feature description,Upgrade your plan to access and customize the Task List.,56,InfoCard description,inline string
+(protected)/(setup)/tasks,Unavailable feature button,Back to Setup,13,InfoCard button,inline string
+(protected)/(setup)/tasks,Locked title,Tasks Setup Complete,20,InfoCard title,inline string
+(protected)/(setup)/tasks,Locked description,Your task list is saved.,24,InfoCard description,inline string
+(protected)/(setup)/tasks,Locked button,Back to Setup,13,InfoCard button,inline string
+(protected)/(setup)/tasks,Primary action,Save & Continue,15,StandardAppButton/primary,inline string
+(protected)/(setup)/tasks,Loading state,Loading default tasks...,24,StandardAppText/default,inline string
+(protected)/(setup)/couple-shots,Top bar,Couple Shots Setup,18,StandardAppTopBar title,inline string
+(protected)/(setup)/couple-shots,Unavailable feature title,Premium Feature,15,InfoCard title,inline string
+(protected)/(setup)/couple-shots,Unavailable feature description,Upgrade your plan to access and customize the Couple Shots List.,64,InfoCard description,inline string
+(protected)/(setup)/couple-shots,Unavailable feature button,Back to Setup,13,InfoCard button,inline string
+(protected)/(setup)/couple-shots,Locked title,Couple Shots Setup Complete,27,InfoCard title,inline string
+(protected)/(setup)/couple-shots,Locked description,Your couple shots list is saved.,32,InfoCard description,inline string
+(protected)/(setup)/couple-shots,Locked button,Back,4,InfoCard button,inline string
+(protected)/(setup)/couple-shots,Primary action,Save & Continue,15,StandardAppButton/primary,inline string
+(protected)/(setup)/couple-shots,Loading state,Loading defaults...,19,StandardAppText/default,inline string
+(protected)/(setup)/group-shots,Top bar,Group Shots Setup,17,StandardAppTopBar title,inline string
+(protected)/(setup)/group-shots,Unavailable feature title,Premium Feature,15,InfoCard title,inline string
+(protected)/(setup)/group-shots,Unavailable feature description,Upgrade your plan to access and customize the Group Shots List.,63,InfoCard description,inline string
+(protected)/(setup)/group-shots,Unavailable feature button,Back to Setup,13,InfoCard button,inline string
+(protected)/(setup)/group-shots,Locked title,Group Shots Setup Complete,26,InfoCard title,inline string
+(protected)/(setup)/group-shots,Locked description,Your group shots list is saved.,31,InfoCard description,inline string
+(protected)/(setup)/group-shots,Locked button,Back,4,InfoCard button,inline string
+(protected)/(setup)/group-shots,Primary action,Save & Continue,15,StandardAppButton/primary,inline string
+(protected)/(setup)/group-shots,Loading state,Loading defaults...,19,StandardAppText/default,inline string
+(protected)/(onboarding)/free,Splash title,Your Free Account is Ready!,27,DynamicSplash title,constants/onboarding-content
+(protected)/(onboarding)/free,Splash description,You have access to all our core features. Let's see what you can do.,68,DynamicSplash description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Welcome to Eye-Doo,18,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,"Manage projects, track timelines, and organize clients all in one place.",72,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Client Portals,14,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,"Share timelines, shot lists, and photos with your clients in a branded portal.",78,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Smart Shot Lists,16,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,Never miss a moment with dynamic group and couple shot lists.,61,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Vendor Management,17,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,Keep all your vendor contacts and details organized per project.,64,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Welcome to Eye-Doo,18,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,See how Eye-Doo works. Verify your email to unlock full access and start creating.,82,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Preview Mode,12,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,"You're currently in read-only preview mode. Explore features, but you'll need to verify your email to create and edit.",118,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Unlock Full Access,18,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,"Verify your email to unlock your full trial: create projects, customize lists, and access all features.",103,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide title,Get Started,11,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/free,Slideshow slide description,"After verification, you'll have full access to all features. You can verify anytime from your account settings.",111,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Loading indicator,Loading...,10,StandardAppLoadingIndicator message,inline string
+(protected)/(onboarding)/paid,Slideshow slide title,Basic: Create a Project,23,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,Tap the + button to create your first project and get started.,62,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Basic: Add a Client,19,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,Link clients to projects for organized communication and tracking.,66,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Basic: Your Timeline,20,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,"Build a schedule with tasks, milestones, and deadlines.",55,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Basic: Add Notes,16,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,Keep track of important details and conversations.,50,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Basic: All Set!,15,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,You know the basics. Start creating amazing projects!,53,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Pro: Client Portals,19,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,"Share timelines, galleries, and updates with clients in branded portals.",72,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Pro: Smart Shot Lists,21,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,"Never miss a shot with dynamic, sortable shot lists.",52,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Pro: Vendor Lists,17,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,Organize all your vendors and contacts in one place.,52,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Pro: Custom Branding,20,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,Add your logo and colors to client-facing materials.,52,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide title,Pro: You're a Pro!,18,Slideshow title,constants/onboarding-content
+(protected)/(onboarding)/paid,Slideshow slide description,You have all the tools to deliver exceptional experiences.,58,Slideshow description,constants/onboarding-content
+(protected)/(onboarding)/expiring,Splash title,Subscription Notice,19,DynamicSplash title,constants/onboarding-content
+(protected)/(onboarding)/expiring,Splash description,Your subscription is ending soon and auto-renew is off. Update your settings to continue enjoying premium features.,115,DynamicSplash description,constants/onboarding-content
+(protected)/(app)/(projects)/index,Top bar title,Projects,8,StandardAppTopBar title,inline string
+(protected)/(app)/(projects)/index,Sign-out dialog title,Sign Out,8,Sign-out dialog title,inline string
+(protected)/(app)/(projects)/index,Sign-out dialog content,Are you sure you want to sign out?,34,Sign-out dialog content,inline string
+(protected)/(app)/(projects)/index,Sign-out dialog confirm,Sign Out,8,Sign-out dialog confirm label,inline string
+(protected)/(app)/(projects)/index,Empty state title,No projects yet,15,headlineMedium,inline string
+(protected)/(app)/(projects)/index,Empty state description,Create your first project to get started!,41,bodyMedium,inline string
+(protected)/(app)/(projects)/index,Launch button,Launch Project,14,StandardAppButton/primary,inline string
+(protected)/(app)/(projects)/index,Project count label,Projects remaining: —,21,labelSmall,inline string
+(protected)/(app)/(projects)/index,Project count label,Projects remaining: {count},27,labelSmall,inline template
+(protected)/(app)/(projects)/index,Delete dialog title,Delete Project,14,StandardAppDialog title,inline string
+(protected)/(app)/(projects)/index,Delete dialog content,This will permanently delete the selected project.,50,StandardAppDialog content,inline string
+(protected)/(app)/(projects)/index,Delete dialog action,Cancel,6,StandardAppDialog action,inline string
+(protected)/(app)/(projects)/index,Delete dialog action,Delete,6,StandardAppDialog action,inline string
+(protected)/(app)/(projects)/global,Top bar title,Global Resources,16,StandardAppTopBar title,inline string
+(protected)/(app)/(projects)/global,Sign-out dialog title,Sign Out,8,Sign-out dialog title,inline string
+(protected)/(app)/(projects)/global,Sign-out dialog content,Are you sure you want to sign out?,34,Sign-out dialog content,inline string
+(protected)/(app)/(projects)/global,Sign-out dialog confirm,Sign Out,8,Sign-out dialog confirm label,inline string
+(protected)/(app)/(projects)/global,Segmented button label,Global Notes,12,StandardAppSegmentedButtons label,inline string
+(protected)/(app)/(projects)/global,Segmented button label,Global Tags,11,StandardAppSegmentedButtons label,inline string
+(protected)/(app)/(projects)/global,Segmented button label,Global Vendors,14,StandardAppSegmentedButtons label,inline string
+(protected)/(app)/(projects)/global,Loading message,Loading global notes...,23,LoadingStateDisplay loadingMessage,inline string
+(protected)/(app)/(projects)/global,Loading message,Loading global tags...,22,LoadingStateDisplay loadingMessage,inline string
+(protected)/(app)/(projects)/global,Loading message,Loading global vendors...,25,LoadingStateDisplay loadingMessage,inline string
+(protected)/(app)/(projects)/global,Empty state,No global notes yet. Add one to keep track of ideas.,52,StandardAppText/default,inline string
+(protected)/(app)/(projects)/global,Section header,Pinned,6,titleMedium,inline string
+(protected)/(app)/(projects)/global,Empty state,Nothing pinned yet.,19,StandardAppText/default,inline string
+(protected)/(app)/(projects)/global,Section header,Notes,5,titleMedium,inline string
+(protected)/(app)/(projects)/global,Dialog title,Edit Note,9,StandardAppDialog title,inline template
+(protected)/(app)/(projects)/global,Dialog title,Add Note,8,StandardAppDialog title,inline template
+(protected)/(app)/(projects)/global,Dialog action,Cancel,6,StandardAppDialog action,inline string
+(protected)/(app)/(projects)/global,Dialog action,Save,4,StandardAppDialog action,inline template
+(protected)/(app)/(projects)/global,Dialog action,Add,3,StandardAppDialog action,inline template
+(protected)/(app)/(projects)/global,Input label,Title (Optional),16,StandardAppTextInput label,inline string
+(protected)/(app)/(projects)/global,Input label,Content,7,StandardAppTextInput label,inline string
+(protected)/(app)/(projects)/global,Input placeholder,Type your note here...,22,StandardAppTextInput placeholder,inline string
+(protected)/(app)/(projects)/global,Search placeholder,Search global tags...,21,StandardAppTextInput placeholder,inline string
+(protected)/(app)/(projects)/global,Search placeholder,Search global vendors...,24,StandardAppTextInput placeholder,inline string
+(protected)/(app)/(projects)/global,Empty state,No tags match your search.,26,StandardAppText/default,inline string
+(protected)/(app)/(projects)/global,Empty state,No global tags yet.,19,StandardAppText/default,inline string
+(protected)/(app)/(projects)/global,Empty state,No vendors match your search.,29,StandardAppText/default,inline string
+(protected)/(app)/(projects)/global,Empty state,No global vendors yet.,22,StandardAppText/default,inline string
+(protected)/(app)/(projects)/global,Info card title,Upgrade Required,16,InfoCard title,inline string
+(protected)/(app)/(projects)/global,Info card description,"Your current plan does not include global lists. Upgrade to manage notes, tags, and vendors across projects.",108,InfoCard description,inline string
+(protected)/(app)/(projects)/global,Info card button,View Plans,10,InfoCard button,inline string
+(protected)/(app)/(projects)/user-lists,Top bar title,My Lists,8,StandardAppTopBar title,inline string
+(protected)/(app)/(projects)/user-lists,Sign-out dialog title,Sign Out,8,Sign-out dialog title,inline string
+(protected)/(app)/(projects)/user-lists,Sign-out dialog content,Are you sure you want to sign out?,34,Sign-out dialog content,inline string
+(protected)/(app)/(projects)/user-lists,Sign-out dialog confirm,Sign Out,8,Sign-out dialog confirm label,inline string
+(protected)/(app)/(projects)/user-lists,Intro,Customize your default templates. Changes here apply to all new projects.,73,bodyMedium,inline string
+(protected)/(app)/(projects)/user-lists,List card title,Kit List Template,17,titleMedium,inline string
+(protected)/(app)/(projects)/user-lists,List card description,Manage your default equipment checklist,39,bodySmall,inline string
+(protected)/(app)/(projects)/user-lists,List card title,Task List Template,18,titleMedium,inline string
+(protected)/(app)/(projects)/user-lists,List card description,Set up standard to-dos and reminders,36,bodySmall,inline string
+(protected)/(app)/(projects)/user-lists,List card title,Group Shots Template,20,titleMedium,inline string
+(protected)/(app)/(projects)/user-lists,List card description,Define standard formal group combinations,41,bodySmall,inline string
+(protected)/(app)/(projects)/user-lists,List card title,Couple Shots Template,21,titleMedium,inline string
+(protected)/(app)/(projects)/user-lists,List card description,Manage your creative couple poses list,38,bodySmall,inline string
+(protected)/(app)/(projects)/account,Top bar title,Account,7,StandardAppTopBar title,inline string
+(protected)/(app)/(projects)/account,Sign-out dialog title,Sign Out,8,Sign-out dialog title,inline string
+(protected)/(app)/(projects)/account,Sign-out dialog content,Are you sure you want to sign out?,34,Sign-out dialog content,inline string
+(protected)/(app)/(projects)/account,Sign-out dialog confirm,Sign Out,8,Sign-out dialog confirm label,inline string
+(protected)/(app)/(projects)/account,Section title,Profile,7,titleMedium,inline string
+(protected)/(app)/(projects)/account,Section title,Subscription,12,titleMedium,inline string
+(protected)/(app)/(projects)/account,Section title,Preferences,11,titleMedium,inline string
+(protected)/(app)/(projects)/account,Section title,Customizations,14,titleMedium,inline string
+(protected)/(app)/(projects)/account,List item title,Profile & Contact,17,StandardAppList title,inline string
+(protected)/(app)/(projects)/account,List item description,"Display name, contact, and business info",40,StandardAppList description,inline string
+(protected)/(app)/(projects)/account,List item title,Manage Subscription,19,StandardAppList title,inline string
+(protected)/(app)/(projects)/account,List item description,View plan details and billing,29,StandardAppList description,inline string
+(protected)/(app)/(projects)/account,List item title,App Settings,12,StandardAppList title,inline string
+(protected)/(app)/(projects)/account,List item description,"Theme, notifications, and defaults",34,StandardAppList description,inline string
+(protected)/(app)/(projects)/account,List item title,Branding,8,StandardAppList title,inline string
+(protected)/(app)/(projects)/account,List item description,Loading plan features...,24,StandardAppList description,inline string
+(protected)/(app)/(projects)/account,List item description,Plan data unavailable,21,StandardAppList description,inline string
+(protected)/(app)/(projects)/account,List item description,Upgrade to unlock custom branding,33,StandardAppList description,inline string
+(protected)/(app)/(projects)/account,List item description,Brand colors and logo,21,StandardAppList description,inline string
+(protected)/(app)/(projects)/account,Footer button,Sign Out,8,StandardAppButton/secondary,inline string
+(protected)/(app)/(projects)/account,Footer version,v2.1.0,6,bodyMedium,inline string
+(protected)/(app)/(projects)/account,Profile form title,Profile & Contact,17,Form title,inline string
+(protected)/(app)/(projects)/account,Profile form subtitle,Update your profile details and business info,45,Form subtitle,inline string
+(protected)/(app)/(projects)/account,Profile form submit,Save Profile,12,Form submit button,inline string
+(protected)/(app)/(projects)/account,Profile form cancel,Cancel,6,Form cancel button,inline string
+(protected)/(app)/(projects)/account,Profile form field label,Display Name,12,Form field label,inline string
+(protected)/(app)/(projects)/account,Profile form field label,First Name,10,Form field label,inline string
+(protected)/(app)/(projects)/account,Profile form field label,Last Name,9,Form field label,inline string
+(protected)/(app)/(projects)/account,Profile form field label,Phone,5,Form field label,inline string
+(protected)/(app)/(projects)/account,Profile form field label,Business Name,13,Form field label,inline string
+(protected)/(app)/(projects)/account,Profile form field label,Website,7,Form field label,inline string
+(protected)/(app)/(projects)/account,Profile form field label,Bio,3,Form field label,inline string
+(protected)/(app)/(projects)/account,Profile form placeholder,Your display name,17,Form field placeholder,inline string
+(protected)/(app)/(projects)/account,Profile form placeholder,First name,10,Form field placeholder,inline string
+(protected)/(app)/(projects)/account,Profile form placeholder,Last name,9,Form field placeholder,inline string
+(protected)/(app)/(projects)/account,Profile form placeholder,+1 555 123 4567,15,Form field placeholder,inline string
+(protected)/(app)/(projects)/account,Profile form placeholder,Studio or company name,22,Form field placeholder,inline string
+(protected)/(app)/(projects)/account,Profile form placeholder,https://example.com,19,Form field placeholder,inline string
+(protected)/(app)/(projects)/account,Profile form placeholder,Tell us about your work,23,Form field placeholder,inline string
+(protected)/(app)/(projects)/account,Profile form validation,First name is required,22,Form validation message,inline string
+(protected)/(app)/(projects)/account,Profile form validation,Last name is required,21,Form validation message,inline string
+(protected)/(app)/(projects)/account,Profile form validation,Bio must be 500 characters or less,34,Form validation message,inline string
+(protected)/(app)/(projects)/account,Profile form validation,Business name must be 100 characters or less,44,Form validation message,inline string
+(protected)/(app)/(projects)/account,Profile form validation,First and last name must both be provided,41,Form validation message,inline string
+(protected)/(app)/(projects)/account,Preferences form title,User Preferences,16,Form title,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form subtitle,Customize your application settings,35,Form subtitle,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form submit,Save Preferences,16,Form submit button,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form cancel,Cancel,6,Form cancel button,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Enable Notifications,20,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Dark Mode,9,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Language,8,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Weather Units,13,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Week Starts On,14,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Marketing Consent,17,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Timezone,8,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Date Format,11,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Time Format,11,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,General Settings,16,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Localization,12,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Formatting,10,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,English,7,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Spanish,7,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,French,6,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,German,6,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Italian,7,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Portuguese,10,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Chinese,7,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Japanese,8,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Korean,6,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Metric (Celsius),16,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Imperial (Fahrenheit),21,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Sunday,6,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Monday,6,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Tuesday,7,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Wednesday,9,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Thursday,8,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Friday,6,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,Saturday,8,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,12 Hour,7,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form label,24 Hour,7,Form label,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Receive push notifications for important updates,48,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Use dark theme for the application,34,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Select your preferred language,30,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Choose temperature unit (Celsius or Fahrenheit),47,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Select which day the week starts,32,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Receive marketing emails and promotional content,48,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,"Enter your timezone (e.g., America/New_York)",44,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Enter your preferred date format,32,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Choose 12-hour or 24-hour time format,37,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form helper,Choose temperature unit,23,Form helper text,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form placeholder,UTC,3,Form field placeholder,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Preferences form placeholder,Select your preferred date format,33,Form field placeholder,constants/user-preferences-form
+(protected)/(app)/(projects)/account,Customizations form title,Brand Customizations,20,Form title,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form subtitle,Customize your branding and theme colors,40,Form subtitle,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form submit,Save Customizations,19,Form submit button,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form cancel,Cancel,6,Form cancel button,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Primary Color,13,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Secondary Color,15,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Accent Color,12,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Background Color,16,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Text Color,10,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Logo URL,8,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Brand Colors,12,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Brand Assets,12,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form label,Background,10,Form label,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Main brand color,16,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Secondary brand color,21,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Accent color for highlights,27,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Background color,16,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Primary text color,18,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,URL to your logo image,22,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Define your color palette,25,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Accent color,12,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form helper,Main text color,15,Form helper text,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form placeholder,#FF5733,7,Form field placeholder,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form placeholder,#33FF57,7,Form field placeholder,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form placeholder,#3357FF,7,Form field placeholder,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form placeholder,#FFFFFF,7,Form field placeholder,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form placeholder,#000000,7,Form field placeholder,constants/customizations-form
+(protected)/(app)/(projects)/account,Customizations form placeholder,https://example.com/logo.png,28,Form field placeholder,constants/customizations-form
+(auth)/sign-in,Auth form submit,Sign In,7,Form submit button,constants/auth-forms.config
+(auth)/sign-in,Auth form cancel,Cancel,6,Form cancel button,constants/auth-forms.config
+(auth)/sign-in,Auth field label,Email Address,13,Form field label,constants/auth-forms.config
+(auth)/sign-in,Auth field placeholder,Enter your email,16,Form field placeholder,constants/auth-forms.config
+(auth)/sign-in,Auth field helper,Enter the email address associated with your account,52,Form helper text,constants/auth-forms.config
+(auth)/sign-in,Auth field label,Password,8,Form field label,constants/auth-forms.config
+(auth)/sign-in,Auth field placeholder,Enter your password,19,Form field placeholder,constants/auth-forms.config
+(auth)/sign-in,Auth field helper,Enter your account password,27,Form helper text,constants/auth-forms.config
+(auth)/sign-in,Auth field label,Remember me,11,Form field label,constants/auth-forms.config
+(auth)/register,Auth form submit,Create Account,14,Form submit button,constants/auth-forms.config
+(auth)/register,Auth form cancel,Cancel,6,Form cancel button,constants/auth-forms.config
+(auth)/register,Auth field label,Display Name,12,Form field label,constants/auth-forms.config
+(auth)/register,Auth field label,Email Address,13,Form field label,constants/auth-forms.config
+(auth)/register,Auth field label,Password,8,Form field label,constants/auth-forms.config
+(auth)/register,Auth field label,Confirm Password,16,Form field label,constants/auth-forms.config
+(auth)/register,Auth field label,I agree to [Terms of Service](terms) and [Privacy Policy](privacy),66,Form field label,constants/auth-forms.config
+(auth)/register,Auth field label,I would like to receive marketing emails,40,Form field label,constants/auth-forms.config
+(auth)/register,Auth field placeholder,Display name,12,Form field placeholder,constants/auth-forms.config
+(auth)/register,Auth field placeholder,email@address.com,17,Form field placeholder,constants/auth-forms.config
+(auth)/register,Auth field placeholder,Create a password,17,Form field placeholder,constants/auth-forms.config
+(auth)/register,Auth field placeholder,Confirm your password,21,Form field placeholder,constants/auth-forms.config
+(auth)/register,Auth form title,Create Account,14,Form title,constants/auth-forms.config
+(auth)/register,Auth form subtitle,Join EyeDoo to manage your wedding photography,46,Form subtitle,constants/auth-forms.config
+(auth)/reset-password,Auth form submit,Send Reset Link,15,Form submit button,constants/auth-forms.config
+(auth)/reset-password,Auth form cancel,Cancel,6,Form cancel button,constants/auth-forms.config
+(auth)/reset-password,Auth form title,Reset Password,14,Form title,constants/auth-forms.config
+(auth)/reset-password,Auth form subtitle,We'll send you instructions to reset your password,50,Form subtitle,constants/auth-forms.config
+(auth)/reset-password,Auth field group,Reset Instructions,18,Form field group label,constants/auth-forms.config
+(auth)/reset-password,Auth field label,Email Address,13,Form field label,constants/auth-forms.config
+(auth)/reset-password,Auth field placeholder,Enter your email address,24,Form field placeholder,constants/auth-forms.config
+(auth)/reset-password,Auth field helper,Enter the email address associated with your account,52,Form helper text,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth form submit,Reset Password,14,Form submit button,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth form cancel,Cancel,6,Form cancel button,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth form title,Reset Password,14,Form title,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth form subtitle,Enter your new password,23,Form subtitle,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth field group,Set New Password,16,Form field group label,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth field label,New Password,12,Form field label,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth field placeholder,Enter your new password,23,Form field placeholder,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth field helper,Use at least 8 characters with a mix of letters and numbers,59,Form helper text,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth field label,Confirm New Password,20,Form field label,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth field placeholder,Confirm your new password,25,Form field placeholder,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth field helper,Re-enter your password to confirm,33,Form helper text,constants/auth-forms.config
+(auth)/reset-password-confirm,Auth validation,Passwords don't match,21,Form validation message,constants/auth-forms.config
+(protected)/(payment)/pricing,Plan description,Try all features for 7 days,27,Plan description,constants/pricing-screen
+(protected)/(payment)/pricing,Plan description,Perfect for getting started,27,Plan description,constants/pricing-screen
+(protected)/(payment)/pricing,Plan description,For professional photographers,30,Plan description,constants/pricing-screen
+(protected)/(payment)/pricing,Plan description,Complete studio solution,24,Plan description,constants/pricing-screen
