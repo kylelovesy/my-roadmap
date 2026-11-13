@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eye Doo Review — Release Acceptance QA Runner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom scrollbars and printing styles */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    @media print {
+      body { background: #ffffff !important; color: #000000 !important; }
+      .no-print { display: none !important; }
+      .print-table { display: block !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans flex flex-col antialiased">
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-slate-800 px-4 py-3 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="bg-emerald-500/10 text-emerald-400 p-2 rounded-lg border border-emerald-500/20">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-100 tracking-tight flex items-center gap-2">
+            Eye Doo Review <span class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">Release Acceptance Runner</span>
+          </h1>
+          <p class="text-xs text-slate-400">37-point Android & Deployed Portal Regression Matrix</p>
+        </div>
+      </div>
+
+      <!-- Live Counters & Actions -->
+      <div class="flex items-center gap-2 flex-wrap text-xs">
+        <div class="flex items-center bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700 gap-3">
+          <span class="text-slate-300"><span id="count-total" class="font-bold text-white">0</span>/37 Done</span>
+          <span class="text-emerald-400 font-semibold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span id="count-pass">0</span> Pass</span>
+          <span class="text-rose-400 font-semibold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span><span id="count-fail">0</span> Fail</span>
+          <span class="text-amber-400 font-semibold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-500"></span><span id="count-blocked">0</span> Blocked</span>
+        </div>
+
+        <button onclick="openReportModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-3.5 py-1.5 rounded-lg transition shadow flex items-center gap-1.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          Export Batch Report
+        </button>
+
+        <button onclick="toggleQuickTools()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+          Tools
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full flex flex-col gap-6">
+
+    <!-- Collapsible Session Environment Header -->
+    <section class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-sm">
+      <div class="flex items-center justify-between cursor-pointer" onclick="toggleEnvPanel()">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <h2 class="text-sm font-semibold text-slate-200">Session Environment & Preparation Defaults</h2>
+          <span class="text-xs text-slate-400">(Auto-applied to batch output)</span>
+        </div>
+        <span id="env-toggle-icon" class="text-slate-400 text-xs flex items-center gap-1 font-mono">Collapse [▲]</span>
+      </div>
+
+      <div id="env-fields" class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">Merged Git SHA</label>
+          <input type="text" id="env-sha" placeholder="e.g. 7f8b9a1c" class="w-full bg-slate-950 border border-slate-750 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Android Build / versionCode</label>
+          <input type="text" id="env-build" placeholder="e.g. 2.4.1 (1420) Play-internal" class="w-full bg-slate-950 border border-slate-750 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Primary Test Device & OS</label>
+          <input type="text" id="env-device" placeholder="e.g. Galaxy A30 (Android 10) / Pixel 8 (14)" class="w-full bg-slate-950 border border-slate-750 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">CI Log Path / Artifact URL</label>
+          <input type="text" id="env-ci" placeholder="e.g. ci.internal.org/builds/9842" class="w-full bg-slate-950 border border-slate-750 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Account A (Name & Plan Limit)</label>
+          <input type="text" id="env-account-a" placeholder="e.g. tester-a@corp / Pro (100 notes)" class="w-full bg-slate-950 border border-slate-750 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Account B (Name & Plan Limit)</label>
+          <input type="text" id="env-account-b" placeholder="e.g. tester-b@corp / Free (10 notes)" class="w-full bg-slate-950 border border-slate-750 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-slate-400 mb-1">Baseline Settings to Restore (TZ, Font, Sound, Language)</label>
+          <input type="text" id="env-baseline" placeholder="e.g. Europe/London, Default Font, System sounds ON, English (UK)" class="w-full bg-slate-950 border border-slate-750 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-indigo-500">
+        </div>
+      </div>
+    </section>
+
+    <!-- Floating / Slide-down Quick Tools Panel (Hidden by default) -->
+    <div id="quick-tools-panel" class="hidden bg-slate-900 border border-indigo-900/50 rounded-xl p-4 shadow-lg flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="text-indigo-400 font-semibold text-xs tracking-wider uppercase">QA Utilities:</div>
+        <!-- Stopwatch / Cold start timer -->
+        <div class="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs">
+          <span class="text-slate-400">Cold Start Stopwatch:</span>
+          <span id="stopwatch-display" class="font-mono text-emerald-400 font-bold text-sm">00:00.0</span>
+          <button id="sw-btn" onclick="toggleStopwatch()" class="px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs">Start</button>
+          <button onclick="resetStopwatch()" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs">Reset</button>
+        </div>
+      </div>
+
+      <!-- Character Limit Quick Copier for Check 10 -->
+      <div class="flex items-center gap-2 flex-wrap text-xs">
+        <span class="text-slate-400">Copy Test String (B23):</span>
+        <button onclick="copyCharString(174)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-mono">174 chars</button>
+        <button onclick="copyCharString(500)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-mono">500 chars</button>
+        <button onclick="copyCharString(501)" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-mono">501 chars</button>
+        <span id="copy-confirm" class="text-emerald-400 text-xs hidden">Copied!</span>
+      </div>
+
+      <div class="flex items-center gap-2 text-xs">
+        <button onclick="exportJSONState()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Backup JSON</button>
+        <button onclick="importJSONPrompt()" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">Restore</button>
+        <button onclick="confirmResetAll()" class="px-2.5 py-1 rounded bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-900/60">Reset All</button>
+      </div>
+    </div>
+
+    <!-- Filters and Section Selector -->
+    <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 text-xs bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+      <!-- Section Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0" id="section-filter-buttons">
+        <button onclick="filterSection('ALL')" class="sec-btn active px-3 py-1.5 rounded-md font-medium transition bg-indigo-600 text-white" data-sec="ALL">All (37)</button>
+        <button onclick="filterSection('A')" class="sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700" data-sec="A">A. Startup & Offline (1-7)</button>
+        <button onclick="filterSection('B')" class="sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700" data-sec="B">B. Forms & Text (8-10)</button>
+        <button onclick="filterSection('C')" class="sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700" data-sec="C">C. Capacity (11-15)</button>
+        <button onclick="filterSection('D')" class="sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700" data-sec="D">D. Reminders & TZ (16-18)</button>
+        <button onclick="filterSection('E')" class="sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700" data-sec="E">E. Weather & PDF (19-24)</button>
+        <button onclick="filterSection('F')" class="sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700" data-sec="F">F. UI & A11y (25-31)</button>
+        <button onclick="filterSection('G')" class="sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700" data-sec="G">G. Portal & Auth (32-37)</button>
+      </div>
+
+      <!-- Status Filter & Search -->
+      <div class="flex items-center gap-2">
+        <select id="status-filter" onchange="renderChecklist()" class="bg-slate-950 border border-slate-750 text-slate-300 rounded px-2.5 py-1.5 focus:outline-none focus:border-indigo-500">
+          <option value="ALL">All Statuses</option>
+          <option value="UNCOMPLETED">Pending / Incomplete</option>
+          <option value="PASS">PASS only</option>
+          <option value="FAIL">FAIL only</option>
+          <option value="BLOCKED">BLOCKED only</option>
+        </select>
+        <div class="relative w-48">
+          <input type="text" id="search-input" onkeyup="renderChecklist()" placeholder="Search checks, IDs..." class="w-full bg-slate-950 border border-slate-750 text-slate-200 rounded px-2.5 py-1.5 pl-7 focus:outline-none focus:border-indigo-500 text-xs">
+          <svg class="w-3.5 h-3.5 text-slate-500 absolute left-2 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checklist Cards Container -->
+    <div id="checklist-container" class="space-y-4">
+      <!-- Injected via JavaScript -->
+    </div>
+  </main>
+
+  <!-- Export Batch Report Modal -->
+  <div id="report-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-750 rounded-xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 class="text-base font-bold text-white">QA Batch Report Generator</h3>
+          <p class="text-xs text-slate-400">Formatted to match tracker schema: Check | SHA/build | Device | Account/plan | Steps tried | PASS/FAIL/BLOCKED | Screenshot/video or notes</p>
+        </div>
+        <button onclick="closeReportModal()" class="text-slate-400 hover:text-white text-lg font-bold px-2 py-1">&times;</button>
+      </div>
+
+      <div class="p-5 flex-1 overflow-y-auto space-y-4 text-xs">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <label class="text-slate-300 font-medium">Batch Filter:</label>
+            <select id="report-batch-select" onchange="generateReportPreview()" class="bg-slate-950 border border-slate-750 text-slate-200 rounded px-2 py-1">
+              <option value="ALL">All Items (1-37)</option>
+              <option value="COMPLETED">Completed Only (Pass, Fail, Blocked)</option>
+              <option value="FAIL_BLOCKED">Failures & Blocked Only</option>
+              <option value="A">Section A (1-7)</option>
+              <option value="B">Section B (8-10)</option>
+              <option value="C">Section C (11-15)</option>
+              <option value="D">Section D (16-18)</option>
+              <option value="E">Section E (19-24)</option>
+              <option value="F">Section F (25-31)</option>
+              <option value="G">Section G (32-37)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="copyReportMarkdown()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded font-medium flex items-center gap-1.5 shadow">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              Copy Markdown Table
+            </button>
+            <button onclick="copyReportTSV()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded font-medium">
+              Copy TSV (Sheets/Excel)
+            </button>
+            <span id="report-copied-tag" class="text-emerald-400 font-semibold hidden">Copied to clipboard!</span>
+          </div>
+        </div>
+
+        <div class="relative">
+          <textarea id="report-output" readonly class="w-full h-80 bg-slate-950 font-mono text-xs text-slate-200 p-3 rounded border border-slate-800 focus:outline-none focus:border-indigo-500 whitespace-pre leading-relaxed select-all"></textarea>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 border-t border-slate-800 bg-slate-900/80 flex items-center justify-between text-xs text-slate-400">
+        <span>Includes session SHA, Build ID, and device overrides.</span>
+        <button onclick="closeReportModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 border-t border-slate-800 py-3 px-4 text-center text-xs text-slate-400 mt-auto">
+    <span>Data automatically persisted to local browser storage. Eye Doo Release Acceptance Testing Suite.</span>
+  </footer>
+
+  <script>
+    // Full 37 Test Checklist Definitions based on the provided specifications
+    const testCases = [
+      {
+        id: 1,
+        sec: "A",
+        title: "Offline cold start",
+        refs: "B8, W2-01",
+        steps: [
+          "Sign in online and open Home and the disposable project.",
+          "Turn airplane mode on (confirm Wi-Fi is also off).",
+          "Force-stop the app and reopen it."
+        ],
+        pass: "Gets beyond the splash to cached Home or an appropriate sign-in state in approx 10s or less.",
+        fail: "Endless splash, blank screen, crash, or repeatedly restarting loading indicators.",
+        limitNote: "Tracker expects approximately 10 seconds or less. Use stopwatch tool to measure.",
+        defaultStepsTried: "Sign in online -> Airplane mode ON -> Force-stop -> Reopen offline."
+      },
+      {
+        id: 2,
+        sec: "A",
+        title: "Online session restoration",
+        refs: "B10, W2-02",
+        steps: [
+          "Sign in and note your name and plan.",
+          "Force-stop and reopen online.",
+          "Repeat twice."
+        ],
+        pass: "Correct account and plan return without briefly presenting an incorrect signed-out state.",
+        fail: "Wrong plan, lost session, or sign-in flashing before Home.",
+        limitNote: "",
+        defaultStepsTried: "Sign in -> Note plan -> Force-stop & reopen online 3x total."
+      },
+      {
+        id: 3,
+        sec: "A",
+        title: "Account switching",
+        refs: "B9, W2-03/05/06",
+        steps: [
+          "Open A’s project, notes and weather.",
+          "Sign out and sign in as B.",
+          "Check Home, projects and lists for anything belonging to A.",
+          "Repeat sign-out/sign-in five times. Open Register and Forgot password without sending requests unnecessarily."
+        ],
+        pass: "B sees only B’s information; auth screens remain usable.",
+        fail: "A’s project names, notes or weather location under B; duplicate screens, slowdown or crashes.",
+        limitNote: "",
+        defaultStepsTried: "Open A data -> Sign out -> Sign in B -> Verify isolation -> 5x cycle -> check Register/Forgot pw."
+      },
+      {
+        id: 4,
+        sec: "A",
+        title: "Reminders after sign-out",
+        refs: "B9, W2-04",
+        steps: [
+          "As A, arrange a reminder due a few minutes ahead.",
+          "Sign out before it is due.",
+          "Wait beyond the reminder time."
+        ],
+        pass: "A’s reminder does not arrive after sign-out.",
+        fail: "Reminder notification fires after account has been signed out.",
+        limitNote: "Record: The scheduled reminder time and the time you signed out in the notes.",
+        defaultStepsTried: "Schedule reminder for +3m -> Sign out at [Time] -> Wait past due time."
+      },
+      {
+        id: 5,
+        sec: "A",
+        title: "Offline edits survive restart",
+        refs: "B11/B12, W2-07–09",
+        steps: [
+          "Load the disposable project online.",
+          "Go offline; edit a note, tick a kit item and change a shot.",
+          "Confirm the changes appear immediately.",
+          "Force-stop and reopen while still offline.",
+          "Reconnect, then reopen the affected lists."
+        ],
+        pass: "All changes survive restart and remain after reconnection, with no duplicates or invalid dates.",
+        fail: "Reverted text, duplicate rows, Invalid Date, NaN, or an offline banner that never clears.",
+        limitNote: "Limit: UI cannot prove the server processed exactly 1 mutation; can prove resulting rows are not duplicated.",
+        defaultStepsTried: "Load online -> Offline -> Edit note, tick kit, change shot -> Force stop -> Reopen offline -> Reconnect."
+      },
+      {
+        id: 6,
+        sec: "A",
+        title: "Unstable connection",
+        refs: "B11, W2-10/11",
+        steps: [
+          "Queue an edit offline.",
+          "Toggle airplane mode off/on three times, then leave connection on.",
+          "Wait for reconnection to settle and reopen the edited item."
+        ],
+        pass: "One final saved item, correct content, no stuck saving state or repeating error notifications.",
+        fail: "Stuck in 'saving' state, duplicate queue entries, or repeating error banners.",
+        limitNote: "Part of GT5 Wedding-day sequence.",
+        defaultStepsTried: "Queue offline edit -> Toggle airplane mode 3x -> Leave online -> Settle & inspect."
+      },
+      {
+        id: 7,
+        sec: "A",
+        title: "Offline timeline time",
+        refs: "B12, W2-12",
+        steps: [
+          "Note an event’s date and time.",
+          "Offline, create or move an event to a distinctive time.",
+          "Restart offline, then reconnect."
+        ],
+        pass: "The chosen date/time remains correct through both transitions.",
+        fail: "Hour shifts, date-only values, invalid dates or the old time returning.",
+        limitNote: "GT5 Note: Run checks 5–7 together as a wedding-day scenario, rather than relying only on separate isolated passes.",
+        defaultStepsTried: "Offline move event to [Time] -> Restart offline -> Reconnect online."
+      },
+      {
+        id: 8,
+        sec: "B",
+        title: "Input survives interruptions",
+        refs: "B14, W2-17–19",
+        steps: [
+          "Start editing a key person and enter distinctive text.",
+          "Switch to another app and back.",
+          "Try the location form offline.",
+          "Repeat its save online."
+        ],
+        pass: "Switching apps doesn't reset input. Where offline submission is rejected, form stays open with text and clear error. Online saves once and closes.",
+        fail: "Disappearing input, silent failure, duplicate records or modal closing despite rejection.",
+        limitNote: "",
+        defaultStepsTried: "Key person text -> Switch apps -> Location offline submission -> Online retry save."
+      },
+      {
+        id: 9,
+        sec: "B",
+        title: "Helper/error text",
+        refs: "F20, W3-16/17, M32",
+        steps: [
+          "Try a malformed sign-in email, then valid-format credentials with a wrong password.",
+          "Open Register and focus each field.",
+          "Repeat at largest font size."
+        ],
+        pass: "Relevant helper/error text remains readable beneath the correct field, no clipping or overlapping controls.",
+        fail: "Clipped text, overlapping inputs, or missing feedback space on optional fields with errors (M32).",
+        limitNote: "Check M32: An optional field with an error must display that error; must not lose its feedback space.",
+        defaultStepsTried: "Malformed email -> Wrong pw -> Register fields focus -> Tested at largest OS font."
+      },
+      {
+        id: 10,
+        sec: "B",
+        title: "Note length and persistence",
+        refs: "B23",
+        steps: [
+          "Prepare text of exactly 174, 500 and 501 characters (use built-in character copy tool).",
+          "Save 174-char note; leave screen and reopen.",
+          "Repeat with 500 chars, restart app and reopen.",
+          "Attempt 501 characters."
+        ],
+        pass: "174 and 500 save intact; 501 cannot persist. Record whether UI blocks typing, validates or reports rejection.",
+        fail: "Silent truncation, changed text, endless saving or success message without a saved note.",
+        limitNote: "Separate check: If original stuck 174-char queued note still exists, verify its recovery too.",
+        defaultStepsTried: "Save 174 chars -> Reopen -> Save 500 chars -> Restart -> Test 501 chars limit."
+      },
+      {
+        id: 11,
+        sec: "C",
+        title: "Notes capacity",
+        refs: "B22",
+        steps: [
+          "Record plan’s project-note limit and current project-owned count.",
+          "Check introduction below limit, then fill disposable project to limit.",
+          "Attempt one additional note.",
+          "Edit an existing note at the limit.",
+          "Delete one, then create a replacement."
+        ],
+        pass: "Capacity guidance changes appropriately; extra creation rejected with one clear message; edits work; deleting frees a slot.",
+        fail: "Global snapshots consuming project capacity, unreadable input after rejection, missing error.",
+        limitNote: "Watch out: Global snapshots must not consume project-owned capacity. Client notes DO count.",
+        defaultStepsTried: "Fill to cap -> Attempt +1 -> Edit note at cap -> Delete 1 -> Create replacement."
+      },
+      {
+        id: 12,
+        sec: "C",
+        title: "Vendors and Tags capacity",
+        refs: "B24",
+        steps: [
+          "Repeat limit/edit/delete/replacement sequence for Vendors and Tags separately.",
+          "Check centred Vendors intro below cap, at cap, and after deletion.",
+          "Exercise Tags entry points: dashboard, Global, and photo-tag flow."
+        ],
+        pass: "Each entry point applies correct limit, gives one clear rejection message, permits edits at capacity.",
+        fail: "Different limits between entry points, duplicate messages, or snapshots incorrectly consuming project capacity.",
+        limitNote: "Tags needn't gain a Vendors-style introduction.",
+        defaultStepsTried: "Vendors cap/edit/delete -> Tags dashboard -> Tags Global -> Tags photo-tag flow."
+      },
+      {
+        id: 13,
+        sec: "C",
+        title: "Online global/project paired save",
+        refs: "B25",
+        steps: [
+          "Start below both limits and record both list counts (for Vendors and Tags).",
+          "Create a uniquely named item with global-save checkbox selected.",
+          "Inspect project list and global list; reopen both.",
+          "Restart and inspect again."
+        ],
+        pass: "Exactly one project copy and one global copy, matching content, no additional copies after restart.",
+        fail: "Missing in one list, duplicate copies, or mismatched content after restart.",
+        limitNote: "Exercise for both Vendors and Tags.",
+        defaultStepsTried: "Record counts -> Create with global-save checked -> Inspect both lists -> Restart & verify."
+      },
+      {
+        id: 14,
+        sec: "C",
+        title: "Paired save at either limit",
+        refs: "B25",
+        steps: [
+          "With global list full but project below capacity, attempt new checked paired save.",
+          "Verify both lists after rejection.",
+          "Repeat with project full but global capacity available."
+        ],
+        pass: "New pair exceeding either limit is rejected as a whole with visible feedback. Neither list gains a copy.",
+        fail: "CRITICAL: One copy saves while the other is silently skipped (half-pair commit).",
+        limitNote: "Critical failure check: No half-pair commits allowed.",
+        defaultStepsTried: "Global full/proj free -> Attempt paired -> Verify 0 added -> Proj full/global free -> Verify 0 added."
+      },
+      {
+        id: 15,
+        sec: "C",
+        title: "Paired save offline and replay",
+        refs: "B25",
+        steps: [
+          "Below both limits, make a checked paired save offline.",
+          "Force-stop and reopen offline.",
+          "Reconnect, wait for syncing, then inspect both lists.",
+          "Restart once more and recheck."
+        ],
+        pass: "Eventual saved result is exactly one copy in each list, without duplicates. Rejection visible if any, no half-pairs.",
+        fail: "Duplicates, missing entries, or server rejection leaving half-committed pair.",
+        limitNote: "Limit: Native replay acceptance; Hermes hash/receipt internals still need technical evidence.",
+        defaultStepsTried: "Offline checked paired save -> Force stop -> Reopen offline -> Reconnect & sync -> Inspect both."
+      },
+      {
+        id: 16,
+        sec: "D",
+        title: "Audible and silent reminders",
+        refs: "B13, W2-13/14",
+        steps: [
+          "Enable notification permission and app sound setting.",
+          "Schedule reminder due a few minutes ahead, wait with app backgrounded.",
+          "Turn app sound setting off and schedule another."
+        ],
+        pass: "First reminder arrives with sound; second still arrives but silently.",
+        fail: "Sound when disabled, silence when enabled, or missing notification.",
+        limitNote: "Watch out: Sound off != notifications disabled. Note Android channel settings / DND if results differ.",
+        defaultStepsTried: "Notification enabled + sound ON -> Receive audible -> Sound OFF -> Receive silent."
+      },
+      {
+        id: 17,
+        sec: "D",
+        title: "Cancelled/disabled event",
+        refs: "B13, W2-15",
+        steps: [
+          "Schedule a reminder.",
+          "Cancel or disable its event before it is due.",
+          "Wait beyond the reminder time."
+        ],
+        pass: "No notification arrives for that cancelled/disabled event.",
+        fail: "Ghost notification fires for cancelled event.",
+        limitNote: "",
+        defaultStepsTried: "Schedule reminder -> Cancel event prior to due time -> Wait past scheduled time."
+      },
+      {
+        id: 18,
+        sec: "D",
+        title: "Venue timezone",
+        refs: "GT6, W2-16/32",
+        steps: [
+          "Use disposable wedding with venue timezone Europe/London.",
+          "Set phone timezone to America/New_York.",
+          "Create reminders whose due time you can verify in both zones; make one silent and cancel another.",
+          "Background app and wait."
+        ],
+        pass: "Timeline and reminder timing follow venue intended time, not unintended phone time. Silent stays silent, cancelled dropped.",
+        fail: "Timing shifts according to phone zone rather than venue zone.",
+        limitNote: "Afterwards: Restore phone timezone and sound settings.",
+        defaultStepsTried: "Venue London, Phone NY -> Schedule reminders -> Test silent & cancel -> Verify venue adherence."
+      },
+      {
+        id: 19,
+        sec: "E",
+        title: "Weather load/cache/layout",
+        refs: "B15/F46, W2-20/21, W4-19",
+        steps: [
+          "Load Home weather online, restart twice.",
+          "Reopen offline after forecast is cached.",
+          "Reconnect on Home and observe loading and refreshed content."
+        ],
+        pass: "No crash, blank card, invalid dates or major layout jump. Cached content usable offline.",
+        fail: "Crash, blank weather card, NaN dates, disruptive layout jump.",
+        limitNote: "Evidence: Short screen recording preferred. If no loading skeleton appears, record unexercised.",
+        defaultStepsTried: "Load online -> 2x restart -> Reopen offline -> Reconnect on Home -> Check layout jump."
+      },
+      {
+        id: 20,
+        sec: "E",
+        title: "Weather alert description",
+        refs: "F49, W4-20",
+        steps: [
+          "Use a supported location with an actual active weather alert.",
+          "Open the alert and read full displayed information."
+        ],
+        pass: "Description is present and readable, not just the alert title.",
+        fail: "Only title shown, description blank or truncated.",
+        limitNote: "Blocked if no active weather alert available; do not mark as PASS if unexercised.",
+        defaultStepsTried: "Open active weather alert at supported location -> Inspect full description."
+      },
+      {
+        id: 21,
+        sec: "E",
+        title: "PDF export",
+        refs: "B16/GT7, W2-22–25/33",
+        steps: [
+          "Open export while project data is loading (verify premature export blocked).",
+          "Export call sheet online and open resulting PDF.",
+          "Inspect fonts, branding, key-person restrictions, and page breaks.",
+          "Repeat offline after loading project, scroll PDF on A30."
+        ],
+        pass: "Exports open; expected fonts/branding; no broken page breaks cutting rows; restrictions honored.",
+        fail: "Fallback serif fonts, missing sections, unreadable text, clipped rows or corrupted file.",
+        limitNote: "Pay special attention to scrolling performance on Galaxy A30.",
+        defaultStepsTried: "Premature export test -> Online export call sheet -> Inspect PDF -> Repeat offline on A30."
+      },
+      {
+        id: 22,
+        sec: "E",
+        title: "Android photo sharing",
+        refs: "B17, W2-26",
+        steps: [
+          "Take disposable photo via app, exercise permission prompt.",
+          "Share to controlled destination or local save.",
+          "Open received/saved image.",
+          "Separately test denied camera permission and app return."
+        ],
+        pass: "Share sheet contains actual image, image opens, denied permission gives recoverable state (no crash/hang).",
+        fail: "Crash, endless spinner on denied permission, empty/corrupt share payload.",
+        limitNote: "Record Android version (repeat on Android 14 and 15+). Never use client photos.",
+        defaultStepsTried: "Take photo -> Share sheet -> Inspect image -> Deny permission test -> Verify recovery."
+      },
+      {
+        id: 23,
+        sec: "E",
+        title: "Language fallback",
+        refs: "B18, W2-27/28",
+        steps: [
+          "Open app language selector, confirm Spanish not offered.",
+          "Set phone language to Spanish and restart app."
+        ],
+        pass: "Clean supported English fallback, no raw translation keys (e.g. 'home.title'), no crash.",
+        fail: "Crash, raw i18n keys displayed, broken layouts.",
+        limitNote: "Afterwards: Restore phone language to baseline.",
+        defaultStepsTried: "Verify Spanish absent in app selector -> Set device to Spanish -> Restart -> Verify English fallback."
+      },
+      {
+        id: 24,
+        sec: "E",
+        title: "Test-login exposure",
+        refs: "B19, W2-29/30",
+        steps: [
+          "Sign out and restart.",
+          "Attempt deep link: eye-doo-app://visual-test"
+        ],
+        pass: "No test-login shortcut or bypass opens; route is blocked/not found or remains behind proper authentication.",
+        fail: "Bypasses auth into authenticated state or exposes debug test login.",
+        limitNote: "Limit: Does not prove test credentials were removed from production bundle (requires technical audit).",
+        defaultStepsTried: "Sign out -> Restart -> Invoke deep link eye-doo-app://visual-test via adb/browser."
+      },
+      {
+        id: 25,
+        sec: "F",
+        title: "Business-card QR",
+        refs: "F38, F39, W3-14/15",
+        steps: [
+          "Open QR in light, dark and stealth themes.",
+          "Scan each from another phone.",
+          "Export/share image to yourself and scan exported image.",
+          "Inspect clear border around QR, especially on A30."
+        ],
+        pass: "QR stays dark on light, unobstructed quiet border, scans in all themes. Exported PNG not inverted/cropped. Company name centered (F39).",
+        fail: "Inverted QR in dark/stealth themes, scannability failure, companyName overlapping content.",
+        limitNote: "Verify F39: Where companyName is populated, appears centered without overlapping.",
+        defaultStepsTried: "Test QR in light, dark, stealth -> Scan each from phone 2 -> Export PNG & scan -> Check border."
+      },
+      {
+        id: 26,
+        sec: "F",
+        title: "Home priorities and copy",
+        refs: "F55, W4-03/04",
+        steps: [
+          "Open project with upcoming events and incomplete work.",
+          "Inspect Home next-action and ceremony information.",
+          "Repeat with long names and largest font."
+        ],
+        pass: "Next-action copy is understandable/readable; no technical/internal wording, overlapping text or clipped ceremony details.",
+        fail: "Internal developer keys shown, clipped ceremony text, overlapping cards.",
+        limitNote: "Record project state used in notes so displayed priority can be verified against it.",
+        defaultStepsTried: "Load project with upcoming events -> Inspect next-action copy -> Re-test with long names + max font."
+      },
+      {
+        id: 27,
+        sec: "F",
+        title: "Timeline controls",
+        refs: "F29/F30, W4-14/15",
+        steps: [
+          "Drag scrubber with thumb, including near edges.",
+          "Use inspection controls.",
+          "Repeat with TalkBack and larger text."
+        ],
+        pass: "Scrubber easy to acquire, smooth movement, inspection controls visible/operable. Accessible hit targets.",
+        fail: "Tiny hit areas, accidental adjacent actions, controls hidden behind text, unresponsive gestures.",
+        limitNote: "Watch out: Visual testing alone cannot measure exact 48 dp target; record feel and acquisition accuracy.",
+        defaultStepsTried: "Thumb drag scrubber across edges -> Inspection controls -> TalkBack navigation."
+      },
+      {
+        id: 28,
+        sec: "F",
+        title: "Reference/instruction image viewer",
+        refs: "F35/F52, W4-17/18",
+        steps: [
+          "Open a shot’s reference image.",
+          "Pinch to zoom, pan around, close viewer.",
+          "Open tip/instruction images with edge detail."
+        ],
+        pass: "Viewer opens properly, zoom/pan works, closing returns cleanly, complete instructional image visible without edge cropping.",
+        fail: "Crash, broken gesture scaling, cropped tip edges, inability to close.",
+        limitNote: "",
+        defaultStepsTried: "Open reference image -> Pinch zoom & pan -> Close -> Open edge-detail instruction image."
+      },
+      {
+        id: 29,
+        sec: "F",
+        title: "Portal preview modal",
+        refs: "F46, W4-24",
+        steps: [
+          "Open portal preview from the app.",
+          "Watch initial load and inspect final preview.",
+          "Close and reopen it."
+        ],
+        pass: "Actual preview content appears—not persistent blank area—and loading doesn't cause disruptive layout jump.",
+        fail: "Blank preview, spinner forever, clipped content, error hidden behind modal.",
+        limitNote: "",
+        defaultStepsTried: "Launch portal preview in app -> Observe skeleton/load -> Close -> Reopen."
+      },
+      {
+        id: 30,
+        sec: "F",
+        title: "Largest font and TalkBack",
+        refs: "GT8, W4-08/09/13/26, W5-22",
+        steps: [
+          "Set largest phone font and display size.",
+          "Walk Home, projects, lists, timeline, a form and tab bar.",
+          "Turn on TalkBack; swipe through controls and activate them.",
+          "Scroll 100-item shot list, particularly on A30."
+        ],
+        pass: "Essential content unclipped, buttons reachable, sensible focus order, meaningful announcements without duplicate stops.",
+        fail: "Icon-only announcements ('button'), detached labels, repeated announcements, severe scrolling stalls.",
+        limitNote: "Record qualitative performance on Galaxy A30 with 100 items.",
+        defaultStepsTried: "Max font + display size -> Walk all core views -> Enable TalkBack -> Scroll 100-item list on A30."
+      },
+      {
+        id: 31,
+        sec: "F",
+        title: "Tier 2 extras on merged build",
+        refs: "M62, TYPO-03, M53",
+        steps: [
+          "Radio: TalkBack reaches option once, announces state; tap label & indicator separately; check disabled.",
+          "Stepper: Focus +/-. Verify labels state purpose, values change 1x per action, boundaries behave.",
+          "Wind units: Change weather-unit preference, return to Home weather, confirm conversion and restart."
+        ],
+        pass: "Single radio targets/callbacks, accessible stepper with clear labels, wind unit numeric conversion correct.",
+        fail: "Duplicate radio stops, unlabeled stepper buttons, unit label changes without number conversion.",
+        limitNote: "Known deferral: ForecastTimeslot metric wind display is NOT fixed by Home card change; do not fail for that.",
+        defaultStepsTried: "TalkBack radio test -> Stepper boundary & labels -> Change wind unit -> Inspect conversion & restart."
+      },
+      {
+        id: 32,
+        sec: "G",
+        title: "Trial display",
+        refs: "RB03, W5-11",
+        steps: [
+          "Use a disposable account eligible for trial.",
+          "Start trial through normal app flow.",
+          "Inspect resulting plan and displayed dates, reopen app."
+        ],
+        pass: "Trial status/dates display consistently, not user-editable via ordinary forms.",
+        fail: "Dates editable in UI, incorrect tier displayed, expiration date desynced.",
+        limitNote: "Doesn't prove: Future-start rejection or concurrent activation safety (requires emulator/backend checks).",
+        defaultStepsTried: "Start trial flow -> Inspect status & dates -> Reopen app -> Verify read-only state."
+      },
+      {
+        id: 33,
+        sec: "G",
+        title: "Expired/read-only account",
+        refs: "RB04, W5-12",
+        steps: [
+          "Use account prepared in expired/read-only state (do not alter real billing).",
+          "Open existing data, attempt restricted creation/edit.",
+          "Reopen item/list after refusal."
+        ],
+        pass: "Restrictions communicated clearly, refused change does not appear saved in UI.",
+        fail: "Silent acceptance in UI, unhandled crash, missing restriction messaging.",
+        limitNote: "Doesn't prove server enforcement or close RB04 remaining code gaps.",
+        defaultStepsTried: "Login expired account -> Attempt restricted creation -> Verify clear rejection -> Check persistence."
+      },
+      {
+        id: 34,
+        sec: "G",
+        title: "Account deletion",
+        refs: "RB05, W5-13",
+        steps: [
+          "Populate disposable account with recognisable test data (no pending offline edits).",
+          "Start deletion and first cancel confirmation; verify account still works.",
+          "Repeat and confirm deletion.",
+          "Verify session ends and account cannot authenticate as existing."
+        ],
+        pass: "Clear confirmation, successful sign-out, no error/retry loop. Old credentials cannot re-authenticate as existing.",
+        fail: "Cancellation breaks session, deletion loops, or deleted account continues to log in.",
+        limitNote: "Doesn't prove backend storage/Firestore cleanup (requires server audit).",
+        defaultStepsTried: "Cancel deletion -> Confirm session survives -> Confirm deletion -> Verify sign-out & blocked re-auth."
+      },
+      {
+        id: 35,
+        sec: "G",
+        title: "Client portal branding and upload",
+        refs: "RB13/RB18, W5-17",
+        steps: [
+          "Open disposable project's deployed portal link in phone browser.",
+          "Inspect fonts, branding, text, and responsive mobile layout.",
+          "Upload small valid test photo; wait for completion.",
+          "Reload and verify uploaded item remains accessible."
+        ],
+        pass: "Readable bundled fonts, correct branding, upload succeeds, photo persists on reload.",
+        fail: "CORS/network errors, success shown before item vanishes, broken thumbnails, unusable mobile layout.",
+        limitNote: "Limit: One successful upload does not prove all CORS/security configurations.",
+        defaultStepsTried: "Open deployed portal URL on mobile browser -> Check fonts/branding -> Upload test photo -> Reload."
+      },
+      {
+        id: 36,
+        sec: "G",
+        title: "Portal draft and locked sections",
+        refs: "RB16",
+        steps: [
+          "Use disposable portal session with editable section: make draft change and reload.",
+          "Prepare separate section in under-review/locked state using owner workflow.",
+          "Attempt to edit/save that locked section."
+        ],
+        pass: "Editable drafts persist; locked/under-review changes prevented with clear feedback and do not persist.",
+        fail: "Draft edits lost, or locked sections silently edited.",
+        limitNote: "Doesn't prove: Activity logging, read-grace no-write, or Functions URL secret matching.",
+        defaultStepsTried: "Draft change in editable section -> Reload -> Attempt edit in locked section -> Verify rejection."
+      },
+      {
+        id: 37,
+        sec: "G",
+        title: "Restore purchases",
+        refs: "RB06, W5-10",
+        steps: [
+          "Install through intended Play test route (approved sandbox/licence tester).",
+          "Sign into prepared test account and invoke Restore purchases.",
+          "Check resulting entitlement and reopen app."
+        ],
+        pass: "Expected sandbox entitlement restored without duplicate or contradictory status.",
+        fail: "Error loop, incorrect plan assigned, or crash during Play Billing query.",
+        limitNote: "BLOCKED if no prepared billing sandbox available. DO NOT make a real purchase.",
+        defaultStepsTried: "Play test install -> Login sandbox account -> Restore purchases -> Verify entitlement."
+      }
+    ];
+
+    // State storage
+    const STORAGE_KEY = "EYE_DOO_QA_CHECKLIST_STATE_V1";
+    let appState = {
+      env: {
+        sha: "",
+        build: "",
+        device: "",
+        ci: "",
+        accountA: "",
+        accountB: "",
+        baseline: ""
+      },
+      tests: {}
+    };
+
+    // Initialize state
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          appState = JSON.parse(raw);
+        }
+      } catch (e) {
+        console.warn("Could not load state", e);
+      }
+
+      // Ensure each test has an entry
+      testCases.forEach(tc => {
+        if (!appState.tests[tc.id]) {
+          appState.tests[tc.id] = {
+            status: "PENDING", // PENDING, PASS, FAIL, BLOCKED
+            stepsTried: tc.defaultStepsTried || "",
+            notes: "",
+            deviceOverride: "",
+            accountOverride: "",
+            checkedSteps: []
+          };
+        }
+      });
+
+      // Populate Environment Inputs
+      document.getElementById("env-sha").value = appState.env.sha || "";
+      document.getElementById("env-build").value = appState.env.build || "";
+      document.getElementById("env-device").value = appState.env.device || "";
+      document.getElementById("env-ci").value = appState.env.ci || "";
+      document.getElementById("env-account-a").value = appState.env.accountA || "";
+      document.getElementById("env-account-b").value = appState.env.accountB || "";
+      document.getElementById("env-baseline").value = appState.env.baseline || "";
+    }
+
+    function saveState() {
+      // Collect Env Inputs
+      appState.env.sha = document.getElementById("env-sha").value.trim();
+      appState.env.build = document.getElementById("env-build").value.trim();
+      appState.env.device = document.getElementById("env-device").value.trim();
+      appState.env.ci = document.getElementById("env-ci").value.trim();
+      appState.env.accountA = document.getElementById("env-account-a").value.trim();
+      appState.env.accountB = document.getElementById("env-account-b").value.trim();
+      appState.env.baseline = document.getElementById("env-baseline").value.trim();
+
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {
+        console.error("Storage save failed", e);
+      }
+      updateCounters();
+    }
+
+    // Attach listeners to environment fields
+    ["env-sha", "env-build", "env-device", "env-ci", "env-account-a", "env-account-b", "env-baseline"].forEach(id => {
+      document.getElementById(id).addEventListener("input", saveState);
+    });
+
+    let currentSection = "ALL";
+
+    function filterSection(sec) {
+      currentSection = sec;
+      document.querySelectorAll(".sec-btn").forEach(btn => {
+        if (btn.getAttribute("data-sec") === sec) {
+          btn.className = "sec-btn active px-3 py-1.5 rounded-md font-medium transition bg-indigo-600 text-white";
+        } else {
+          btn.className = "sec-btn px-3 py-1.5 rounded-md font-medium transition bg-slate-800 text-slate-300 hover:bg-slate-700";
+        }
+      });
+      renderChecklist();
+    }
+
+    function updateCounters() {
+      let pass = 0, fail = 0, blocked = 0, totalDone = 0;
+      testCases.forEach(tc => {
+        const s = appState.tests[tc.id]?.status;
+        if (s === "PASS") { pass++; totalDone++; }
+        else if (s === "FAIL") { fail++; totalDone++; }
+        else if (s === "BLOCKED") { blocked++; totalDone++; }
+      });
+
+      document.getElementById("count-total").innerText = totalDone;
+      document.getElementById("count-pass").innerText = pass;
+      document.getElementById("count-fail").innerText = fail;
+      document.getElementById("count-blocked").innerText = blocked;
+    }
+
+    function setStatus(id, newStatus) {
+      if (appState.tests[id].status === newStatus) {
+        appState.tests[id].status = "PENDING";
+      } else {
+        appState.tests[id].status = newStatus;
+      }
+      saveState();
+      renderChecklist();
+    }
+
+    function updateTestField(id, field, value) {
+      if (!appState.tests[id]) return;
+      appState.tests[id][field] = value;
+      saveState();
+    }
+
+    function toggleStepCheckbox(id, stepIndex) {
+      const cur = appState.tests[id].checkedSteps || [];
+      const idx = cur.indexOf(stepIndex);
+      if (idx > -1) {
+        cur.splice(idx, 1);
+      } else {
+        cur.push(stepIndex);
+      }
+      appState.tests[id].checkedSteps = cur;
+      saveState();
+      renderChecklist();
+    }
+
+    function renderChecklist() {
+      const container = document.getElementById("checklist-container");
+      const statusFilter = document.getElementById("status-filter").value;
+      const searchQuery = document.getElementById("search-input").value.toLowerCase().trim();
+
+      const filtered = testCases.filter(tc => {
+        if (currentSection !== "ALL" && tc.sec !== currentSection) return false;
+        const curStatus = appState.tests[tc.id]?.status || "PENDING";
+        if (statusFilter === "UNCOMPLETED" && curStatus !== "PENDING") return false;
+        if (statusFilter !== "ALL" && statusFilter !== "UNCOMPLETED" && curStatus !== statusFilter) return false;
+
+        if (searchQuery) {
+          const matchText = `${tc.id} ${tc.title} ${tc.refs} ${tc.pass} ${tc.fail} ${tc.limitNote}`.toLowerCase();
+          if (!matchText.includes(searchQuery)) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-8 text-center text-slate-400">
+            <svg class="w-8 h-8 mx-auto text-slate-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            No test checks match the selected filter criteria.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(tc => {
+        const tState = appState.tests[tc.id] || {};
+        const status = tState.status || "PENDING";
+        const checked = tState.checkedSteps || [];
+
+        // Status badge & card border styling
+        let borderClass = "border-slate-800";
+        let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold tracking-wide uppercase bg-slate-800 text-slate-400">PENDING</span>`;
+        if (status === "PASS") {
+          borderClass = "border-emerald-600/50 bg-emerald-950/10";
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold tracking-wide uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">PASS</span>`;
+        } else if (status === "FAIL") {
+          borderClass = "border-rose-600/60 bg-rose-950/15";
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold tracking-wide uppercase bg-rose-500/20 text-rose-400 border border-rose-500/30">FAIL</span>`;
+        } else if (status === "BLOCKED") {
+          borderClass = "border-amber-600/50 bg-amber-950/10";
+          statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-semibold tracking-wide uppercase bg-amber-500/20 text-amber-400 border border-amber-500/30">BLOCKED</span>`;
+        }
+
+        return `
+          <div class="bg-slate-900 border ${borderClass} rounded-xl p-4 transition shadow-sm" id="card-${tc.id}">
+            <!-- Card Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+              <div class="flex items-start gap-2.5">
+                <span class="w-6 h-6 rounded bg-slate-800 text-slate-300 font-mono text-xs flex items-center justify-center font-bold flex-shrink-0 mt-0.5">
+                  ${tc.id}
+                </span>
+                <div>
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <h3 class="text-sm font-bold text-white tracking-tight">${tc.title}</h3>
+                    <span class="font-mono text-[11px] text-indigo-400 bg-indigo-950/60 px-1.5 py-0.2 rounded border border-indigo-900/60">${tc.refs}</span>
+                    ${statusBadge}
+                  </div>
+                  <span class="text-[11px] text-slate-400">Section ${tc.sec}</span>
+                </div>
+              </div>
+
+              <!-- Pass / Fail / Blocked Action Buttons -->
+              <div class="flex items-center gap-1.5 self-end sm:self-center">
+                <button onclick="setStatus(${tc.id}, 'PASS')" class="px-3 py-1 rounded text-xs font-semibold transition ${status === 'PASS' ? 'bg-emerald-600 text-white shadow' : 'bg-slate-800 hover:bg-emerald-950 text-slate-300 hover:text-emerald-300 border border-slate-700'}">
+                  PASS
+                </button>
+                <button onclick="setStatus(${tc.id}, 'FAIL')" class="px-3 py-1 rounded text-xs font-semibold transition ${status === 'FAIL' ? 'bg-rose-600 text-white shadow' : 'bg-slate-800 hover:bg-rose-950 text-slate-300 hover:text-rose-300 border border-slate-700'}">
+                  FAIL
+                </button>
+                <button onclick="setStatus(${tc.id}, 'BLOCKED')" class="px-3 py-1 rounded text-xs font-semibold transition ${status === 'BLOCKED' ? 'bg-amber-600 text-white shadow' : 'bg-slate-800 hover:bg-amber-950 text-slate-300 hover:text-amber-300 border border-slate-700'}">
+                  BLOCKED
+                </button>
+              </div>
+            </div>
+
+            <!-- Card Body: Steps, Criteria & Execution Inputs -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-3 text-xs">
+              <!-- Left Column: Test Procedure & Pass/Fail Criteria (7 Cols) -->
+              <div class="lg:col-span-7 space-y-2.5">
+                <div>
+                  <div class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Execution Steps:</div>
+                  <div class="space-y-1">
+                    ${tc.steps.map((st, sIdx) => {
+                      const isTicked = checked.includes(sIdx);
+                      return `
+                        <label class="flex items-start gap-2 cursor-pointer p-1 rounded hover:bg-slate-800/40 text-slate-300 select-none">
+                          <input type="checkbox" ${isTicked ? 'checked' : ''} onchange="toggleStepCheckbox(${tc.id}, ${sIdx})" class="mt-0.5 rounded border-slate-700 bg-slate-950 text-indigo-600 focus:ring-0">
+                          <span class="${isTicked ? 'line-through text-slate-500' : ''}">${sIdx + 1}. ${st}</span>
+                        </label>
+                      `;
+                    }).join("")}
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 border-t border-slate-800/60">
+                  <div class="bg-emerald-950/20 border border-emerald-900/40 p-2 rounded">
+                    <span class="font-semibold text-emerald-400 block mb-0.5">Expected Pass:</span>
+                    <span class="text-slate-300 text-[11px] leading-tight">${tc.pass}</span>
+                  </div>
+                  <div class="bg-rose-950/20 border border-rose-900/40 p-2 rounded">
+                    <span class="font-semibold text-rose-400 block mb-0.5">Fail Signs:</span>
+                    <span class="text-slate-300 text-[11px] leading-tight">${tc.fail}</span>
+                  </div>
+                </div>
+
+                ${tc.limitNote ? `
+                  <div class="text-[11px] text-amber-300/90 bg-amber-950/20 border border-amber-900/30 p-2 rounded flex items-start gap-1.5">
+                    <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span><strong>Notice / Scope:</strong> ${tc.limitNote}</span>
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- Right Column: Record Data & Evidence (5 Cols) -->
+              <div class="lg:col-span-5 bg-slate-950/70 p-3 rounded-lg border border-slate-800/80 flex flex-col justify-between gap-2.5">
+                <div>
+                  <label class="block text-slate-400 text-[11px] font-semibold uppercase tracking-wider mb-1">Steps Tried / Execution Detail:</label>
+                  <input type="text" value="${escapeHtml(tState.stepsTried || '')}" onchange="updateTestField(${tc.id}, 'stepsTried', this.value)" placeholder="Exact steps executed" class="w-full bg-slate-900 border border-slate-750 text-slate-200 text-xs rounded px-2.5 py-1.5 focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <div>
+                  <label class="block text-slate-400 text-[11px] font-semibold uppercase tracking-wider mb-1">Notes, Timings & Evidence Links:</label>
+                  <textarea rows="2" onchange="updateTestField(${tc.id}, 'notes', this.value)" placeholder="e.g. Cold start 4.2s. Screenshot uploaded: cold_start_01.mp4" class="w-full bg-slate-900 border border-slate-750 text-slate-200 text-xs rounded px-2.5 py-1.5 focus:outline-none focus:border-indigo-500 leading-normal">${escapeHtml(tState.notes || '')}</textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-slate-400 text-[10px]">Device Override (Optional):</label>
+                    <input type="text" value="${escapeHtml(tState.deviceOverride || '')}" onchange="updateTestField(${tc.id}, 'deviceOverride', this.value)" placeholder="Leave blank for default" class="w-full bg-slate-900 border border-slate-750 text-slate-300 text-xs rounded px-2 py-1">
+                  </div>
+                  <div>
+                    <label class="block text-slate-400 text-[10px]">Account/Plan Override:</label>
+                    <input type="text" value="${escapeHtml(tState.accountOverride || '')}" onchange="updateTestField(${tc.id}, 'accountOverride', this.value)" placeholder="e.g. Account A / Pro" class="w-full bg-slate-900 border border-slate-750 text-slate-300 text-xs rounded px-2 py-1">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // Helper functions
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Stopwatch logic for Check 1 (Offline cold start) & Check 4 (Reminders)
+    let swInterval = null;
+    let swStartTime = 0;
+    let swRunning = false;
+
+    function toggleStopwatch() {
+      const btn = document.getElementById("sw-btn");
+      if (!swRunning) {
+        swStartTime = Date.now() - (swStartTime ? swStartTime : 0);
+        swInterval = setInterval(updateStopwatch, 50);
+        swRunning = true;
+        btn.innerText = "Stop";
+        btn.className = "px-2 py-0.5 rounded bg-rose-600 hover:bg-rose-500 text-white font-medium text-xs";
+      } else {
+        clearInterval(swInterval);
+        swRunning = false;
+        btn.innerText = "Start";
+        btn.className = "px-2 py-0.5 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs";
+      }
+    }
+
+    function resetStopwatch() {
+      if (swRunning) toggleStopwatch();
+      swStartTime = 0;
+      document.getElementById("stopwatch-display").innerText = "00:00.0";
+    }
+
+    function updateStopwatch() {
+      const elapsed = Date.now() - swStartTime;
+      const totalSec = elapsed / 1000;
+      const mins = Math.floor(totalSec / 60);
+      const secs = Math.floor(totalSec % 60);
+      const tenths = Math.floor((elapsed % 1000) / 100);
+      const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}.${tenths}`;
+      document.getElementById("stopwatch-display").innerText = formatted;
+    }
+
+    // Character String Generator for Check 10 (174, 500, 501 chars)
+    function copyCharString(len) {
+      let str = "";
+      const base = "EyeDoo-B23-CharCheck-";
+      str += base;
+      while (str.length < len) {
+        str += "x";
+      }
+      str = str.substring(0, len);
+      navigator.clipboard.writeText(str).then(() => {
+        const tag = document.getElementById("copy-confirm");
+        tag.innerText = `Copied ${len} characters to clipboard!`;
+        tag.classList.remove("hidden");
+        setTimeout(() => tag.classList.add("hidden"), 2500);
+      });
+    }
+
+    function toggleEnvPanel() {
+      const panel = document.getElementById("env-fields");
+      const icon = document.getElementById("env-toggle-icon");
+      if (panel.classList.contains("hidden")) {
+        panel.classList.remove("hidden");
+        icon.innerText = "Collapse [▲]";
+      } else {
+        panel.classList.add("hidden");
+        icon.innerText = "Expand [▼]";
+      }
+    }
+
+    function toggleQuickTools() {
+      const tools = document.getElementById("quick-tools-panel");
+      tools.classList.toggle("hidden");
+    }
+
+    // Export & Report Modal
+    function openReportModal() {
+      generateReportPreview();
+      document.getElementById("report-modal").classList.remove("hidden");
+    }
+
+    function closeReportModal() {
+      document.getElementById("report-modal").classList.add("hidden");
+    }
+
+    function generateReportData(batchFilter) {
+      const envSha = appState.env.sha || "Not Recorded";
+      const envBuild = appState.env.build || "Not Recorded";
+      const envDevice = appState.env.device || "Not Recorded";
+      const envAcc = `${appState.env.accountA || 'A'} / ${appState.env.accountB || 'B'}`;
+
+      let filtered = testCases;
+      if (batchFilter === "COMPLETED") {
+        filtered = filtered.filter(tc => appState.tests[tc.id]?.status && appState.tests[tc.id].status !== "PENDING");
+      } else if (batchFilter === "FAIL_BLOCKED") {
+        filtered = filtered.filter(tc => appState.tests[tc.id]?.status === "FAIL" || appState.tests[tc.id]?.status === "BLOCKED");
+      } else if (["A", "B", "C", "D", "E", "F", "G"].includes(batchFilter)) {
+        filtered = filtered.filter(tc => tc.sec === batchFilter);
+      }
+
+      return filtered.map(tc => {
+        const tState = appState.tests[tc.id] || {};
+        const status = tState.status || "PENDING";
+        const shaBuild = `${envSha} / ${envBuild}`;
+        const device = tState.deviceOverride || envDevice;
+        const account = tState.accountOverride || envAcc;
+        const stepsTried = tState.stepsTried || tc.defaultStepsTried || "Standard checklist procedure";
+        const notes = tState.notes || (status === "PASS" ? "Verified without regression." : (status === "BLOCKED" ? "Blocked by prerequisite environment." : ""));
+        return {
+          check: `${tc.id}. ${tc.title} (${tc.refs})`,
+          shaBuild,
+          device,
+          account,
+          stepsTried,
+          status,
+          notes
+        };
+      });
+    }
+
+    function generateReportPreview() {
+      const filter = document.getElementById("report-batch-select").value;
+      const data = generateReportData(filter);
+
+      let md = `| Check | SHA/build | Device | Account/plan | Steps tried | PASS/FAIL/BLOCKED | Screenshot/video or notes |\n`;
+      md += `| :--- | :--- | :--- | :--- | :--- | :---: | :--- |\n`;
+
+      data.forEach(r => {
+        const cleanNotes = r.notes.replace(/[\r\n]+/g, ' ');
+        const cleanSteps = r.stepsTried.replace(/[\r\n]+/g, ' ');
+        md += `| ${r.check} | ${r.shaBuild} | ${r.device} | ${r.account} | ${cleanSteps} | **${r.status}** | ${cleanNotes} |\n`;
+      });
+
+      document.getElementById("report-output").value = md;
+    }
+
+    function copyReportMarkdown() {
+      const output = document.getElementById("report-output");
+      output.select();
+      navigator.clipboard.writeText(output.value).then(() => {
+        const tag = document.getElementById("report-copied-tag");
+        tag.innerText = "Markdown copied!";
+        tag.classList.remove("hidden");
+        setTimeout(() => tag.classList.add("hidden"), 2000);
+      });
+    }
+
+    function copyReportTSV() {
+      const filter = document.getElementById("report-batch-select").value;
+      const data = generateReportData(filter);
+
+      let tsv = `Check\tSHA/build\tDevice\tAccount/plan\tSteps tried\tPASS/FAIL/BLOCKED\tScreenshot/video or notes\n`;
+      data.forEach(r => {
+        tsv += `${r.check}\t${r.shaBuild}\t${r.device}\t${r.account}\t${r.stepsTried}\t${r.status}\t${r.notes}\n`;
+      });
+
+      navigator.clipboard.writeText(tsv).then(() => {
+        const tag = document.getElementById("report-copied-tag");
+        tag.innerText = "TSV / Excel format copied!";
+        tag.classList.remove("hidden");
+        setTimeout(() => tag.classList.add("hidden"), 2000);
+      });
+    }
+
+    // JSON Backup & Restore
+    function exportJSONState() {
+      const blob = new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `eyedoo_qa_results_${appState.env.sha || 'latest'}_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSONPrompt() {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".json";
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          try {
+            const parsed = JSON.parse(ev.target.result);
+            if (parsed.tests) {
+              appState = parsed;
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+              loadState();
+              renderChecklist();
+              updateCounters();
+              alert("Test session state imported successfully.");
+            } else {
+              alert("Invalid QA state file format.");
+            }
+          } catch (err) {
+            alert("Error parsing JSON file: " + err.message);
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    function confirmResetAll() {
+      if (confirm("Are you sure you want to reset all test statuses and notes? This will clear all checked items.")) {
+        localStorage.removeItem(STORAGE_KEY);
+        appState = { env: {}, tests: {} };
+        loadState();
+        renderChecklist();
+        updateCounters();
+      }
+    }
+
+    // Initial boot
+    window.addEventListener("DOMContentLoaded", () => {
+      loadState();
+      renderChecklist();
+      updateCounters();
+    });
+  </script>
+</body>
+</html>
